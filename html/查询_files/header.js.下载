@@ -1,0 +1,1312 @@
+//首页个人综合信息获取用户网别
+var meNetType="";
+//宽带获取用户currentId
+var meCurrentId="";
+// 未登录导航路径
+var menu_notlogin = "/e4/WT4/WT4_MENU_4_002/";
+
+//我的状态缓存变量
+var detail_cache;
+//我的个人信息缓存
+var personal_info_cache;
+var menutype = "";
+// 温馨提示语
+function currentTime() {
+	var hour = new Date().getHours();
+	if (hour >= 6 && hour < 11) {
+		return "上午好";
+	} else if (hour >= 11 && hour < 13) {
+		return "中午好";
+	} else if (hour >= 13 && hour < 19) {
+		return "下午好";
+	} else {
+		return "晚上好";
+	}
+}
+// 订单信息
+var initOrderInfo = function(data) {
+    var num = data.TOTALNUM;
+    if (num == 0) {
+        $(".money_w3").html("<p>您没有未支付订单，赶紧去订购吧!</p>");
+        return false;
+    } else {
+        var tailHtml = '<center>共<b>' + num + '</b>条订单&#12288;共计<strong>￥' + formatPrice(data.SUMMONEY, 2) + '</strong></center><br>';
+        var li = "";
+        var orderList = data.ORDERGOODS_LIST;
+        if (orderList.length > 0) {
+            $(".money_w3>p").hide();
+            $(".data_w").show();
+        }
+        if (orderList.length > 2) {
+            $(".more_w").show();
+        }
+        if (orderList.length > 1) {
+	        for (var i = 0; i < 2; i++) {
+	            li += '<div class="main_wf">' 
+	                + '<span class="ig_w"><img src="'+orderList[i].PHOTO_URL+'" alt="'+orderList[i].GOODS_NAME+'" width="50" height="50"/></span>'
+	                + '<span class="jg_w">'+orderList[i].GOODS_NAME+'</span>'
+	                + '<span class="nm_w">￥' + formatPrice(orderList[i].INCOME_MONEY, 2) + '</span>'
+	                + '</div>';
+	        }
+        } else {
+            li += '<div class="main_wf">' 
+                + '<span class="ig_w"><img src="'+orderList[0].PHOTO_URL+'" alt="'+orderList[0].GOODS_NAME+'" width="50" height="50"/></span>'
+                + '<span class="jg_w">'+orderList[0].GOODS_NAME+'</span>'
+                + '<span class="nm_w">￥' + formatPrice(orderList[0].INCOME_MONEY, 2) + '</span>'
+                + '</div>';
+        }
+        $(".gouwu_text").html(li);
+        $(".nav_w").html(tailHtml);
+        
+    }
+    $(".money_w1").html('未付款订单（' + num + '）');
+};
+// 登录框  
+function log_out() {
+    var params = {};
+    jQuery.getJSON('//uac.10010.com/portal/Service/LogOut?callback=?', params, function() {
+    	window.location.reload();
+});
+}
+// 登录判断
+$(document).ready(function(){
+// =====================页头================================
+		$("#hotSearchBox_product").empty();
+		var product = '';
+		// 搜索框--商品
+	   	$.each(hotsearch.mall,function(i,value){
+   		if (value != null && value.def == "1") { // 搜索框默认
+   			$("#searchInputBox").val(value.word);
+   		}   		
+	   	// 底线条	
+	   	if (value != null && value.url != null && value.url != 'null') {
+   			product += '<a href="'+value.url+'" class="school-item ">'+value.word+'</a>';	   		
+	   		$("#hotSearchBox_product").html(product);   		
+	   	}
+	   	});
+	   	
+		$("#hotSearchBox_service").empty();
+		var service = '';
+		// 搜索框--商品
+	   	$.each(hotsearch.service,function(i,value){
+   		if (value != null && value.def == 1) { // 搜索框默认
+   			$("#searchInputBox").attr("value",value.word);
+   		}   		
+	   	// 底线条	
+	   	if (value != null && value.url != null && value.url != 'null') {
+	   		service += '<a href=http://iservice.10010.com/e3/search/searchGoods.html?keyword='+value.word+' class="school-item ">'+value.word+'</a>';	   		
+	   		$("#hotSearchBox_service").html(service);   		
+	   	}
+	   	});
+		//搜索商品
+		$("#searchBtnBox").click(function(){
+			var val=$("#searchInputBox").val();
+			if (val == "") {
+			 val = 	$("#searchInputBox").attr("placeholder");
+			}
+			if($("#searchType .li-one").text()=="商品"){
+				window.location.href = encodeURI("http://s.10010.com/SearchApp/chseSearchList/init?keyword="+val+ "&wd=" +val);
+			}else if($("#searchType .li-one").text()=="服务"){
+				window.location.href = encodeURI("http://iservice.10010.com/e3/search/searchGoods.html?keyword="+ val);
+			}
+			return false;
+		});
+		$("#searchInputBox").keypress(function(event){				
+			 if(event.keyCode==13){
+				 event.preventDefault();
+				 $("#searchBtnBox").click();
+			}
+			
+		});
+		var userLoginCookie = {};
+	    var userLoginInfo = $.evalJSON($.cookie("piw"))||{};
+	    if ($.cookie('JUT') != null && userLoginInfo != null && !isEmpty(userLoginInfo.nickName)) { // 已登录用户
+		    userLoginCookie.NICK_NAME = (isEmpty(userLoginInfo.nickName) ? "" : userLoginInfo.nickName);
+		    userLoginCookie.VERIFY_STATE = (isEmpty(userLoginInfo.verifyState) ? "" : userLoginInfo.verifyState);
+		    var urlhtml = currentTime() +','+userLoginCookie.NICK_NAME+'<a onclick="log_out()" style="cursor:pointer">[退出]</a>&nbsp;&nbsp;<a target="_blank"'
+                +'href="https://uac.10010.com/cust/order/myorderinfo">我的订单</a>';
+		    $("#pleaseLoginDiv").empty();
+		    $("#pleaseLoginDiv").show();
+		    $("#noLoginDiv").hide();
+		    $("#pleaseLoginDiv").html(urlhtml);
+	    } else { // 未登录用户
+		    $("#pleaseLoginDiv").hide();
+		    $("#noLoginDiv").show();
+	    }
+	    var COOKIE_CITY="mallcity";
+		//切换地区
+		var arr=new Array(2);
+		var provincecodeLink =  arr[0];
+		if($.cookie("mallcity")){
+			arr=$.cookie("mallcity").split("|");
+			if(arr[0]){				
+				var flag = $("a[provincecode='"+arr[0]+"']").eq(0).text();
+				if('79'==provincecodeLink){
+					$('#OldUserLink').attr("href","http://www.10010.com/static/homepage/subjectpage/57900000251770.html");
+			  	}else{
+			  		$('#OldUserLink').attr("href","http://www.10010.com/pushpage/59800000169773.html");
+			  	}
+				if("" == flag || flag == null) {
+					$('#my_area').text($("a[provincecode='"+arr[0]+"']").text());					
+				} else {					 
+					$('#my_area').text($("a[provincecode='"+arr[0]+"']").text());
+				}
+			}
+		}else{
+			if('79'==provincecodeLink){
+				$('#OldUserLink').attr("href","http://www.10010.com/static/homepage/subjectpage/57900000251770.html");
+		  	}else{
+		  		$('#OldUserLink').attr("href","http://www.10010.com/pushpage/59800000169773.html");
+		  	}
+			Set_Cookie(COOKIE_CITY, "11|110", 3, "/", ".10010.com");
+		}
+	    
+		//导航切换地区		
+		$(".media-body a").on('click',function(){
+			var text = $(this).text();
+			$("#my_area").text(text)
+			var province = $(this).attr('provinceCode');
+			var cityCode = $(this).attr('cityCode');
+			if('79'==province){
+				$('#OldUserLink').attr("href","http://www.10010.com/static/homepage/subjectpage/57900000251770.html");
+		  	}else{
+		  		$('#OldUserLink').attr("href","http://www.10010.com/pushpage/59800000169773.html");
+		  	}
+			Set_Cookie(COOKIE_CITY, province + "|" + cityCode, 3, "/", ".10010.com");
+			$(this).parents(".dropdown-menu").hide();
+		})
+// =====================页头================================
+	 // 搜索框出现
+    $(".sousuo_DIV").click(function(ev) {
+       $("ul.pull-right").fadeOut(200,function(){
+           $(".navbar-form").fadeIn();
+       });
+    });
+
+    $('.nav-ehall').bind({
+      mouseenter:
+      function(){
+      },
+      mouseleave:
+      function(){
+        $(".navbar-form").fadeOut(200,function(){
+            $("ul.pull-right").fadeIn();
+
+        });
+      }
+    });
+
+	
+	//获取用户头像
+	//取用户头像//生产地址https://uac.10010.com/portal/Service/getHeadImg
+	//测试地址：http://authtest2.uac.10010.com/portal/Service/getHeadImg
+	$.getJSON("https://uac.10010.com/portal/Service/getHeadImg?callback=?",function(data){
+		//返回内容样例：{rsp_code:"0000",rsp_desc:"正常/成功",user_head_img:"http://211.94.67.42/portal/images/userimg/g02/M00/01/38/Co-DPFR1jPCAc59xAAAKgkpLTRs179.png"}
+		if(data.rsp_code=="0000" && data.user_head_img!=null && data.user_head_img!=""){
+			$("#menu_userpic").attr("src",data.user_head_img);
+			$("#menu_userpic").css("border-radius","43px");
+			$("#my_data_userpic").attr("src",data.user_head_img);
+			$("#my_data_userpic").css("border-radius","43px");
+			$(".txsc_pop_cont_rnr").find('img').each(function(){
+				$(this).attr("src",data.user_head_img);
+			});
+			$("#showImg3").attr('src',data.user_head_img);
+		}else{
+			$("#menu_userpic").attr("src","//m2.img.10010.com/e4/images/userImg.png");
+			$("#my_data_userpic").attr("src","//m2.img.10010.com/e4/images/userImg.png");
+		}
+	});	
+	
+	//个人信息加载
+	if(personal_info_cache==null){
+		detail();
+	}
+	
+	
+	//设置未读消息数量
+	setNoReadMsgCount();
+	
+	// 判断是否登录---导航栏地址
+	if(_BaseTools.isLoginNoshow()) {  // 已登录
+		$('#header_logout').attr("onclick","logout()");
+		CommonMain.loadData('/info',null,'load(data)');
+	} else { // 未登录
+		$('#numList').find('li').each(function(){
+			$(this).remove();
+		})
+		$('#numList').append('<li onclick="login_modal()"><a  href="#">登录</a></li>')
+		$('#menu_userpic').parent().attr('onclick', 'login_modal()');
+		$('#login iframe').attr('src','//uac.10010.com/portal/hallLogin');
+		$('#menu_query').attr('href',menu_notlogin + 'query.html');
+		$('#menu_pay').attr('href',menu_notlogin + 'pay.html');
+		$('#menu_hadle').attr('href',menu_notlogin + 'handle.html');
+		$('#menu_customer').attr('href',menu_notlogin +'customerService.html');
+		$('#menu_service').attr('href',menu_notlogin +'bianminfuwu.html');
+		$('#menu_feature').attr('href',menu_notlogin +'featuredarea.html');
+		$('#bisQuery-self').attr('href',"javascript:login_modal()");
+		$('#bisBianminfuwu-self').attr('href',"javascript:login_modal()");
+		$('#bisFee-self').attr('href',"javascript:login_modal()");
+		$('#bisTran-self').attr('href',"javascript:login_modal()");
+		$('#bisTese-self').attr('href',"javascript:login_modal()");
+		$('#bisKefu-self').attr('href',"javascript:login_modal()");
+		
+		setTimeout(function(){
+			$('#bisTran').attr('href',menu_notlogin +'handle.html');
+			$('#bisQuery').attr('href',menu_notlogin +'query.html');
+			$('#bisFee').attr('href',menu_notlogin +'pay.html');
+			$('#bisKefu').attr('href',menu_notlogin +'customerService.html');
+			$('#bisBianminfuwu').attr('href',menu_notlogin +'bianminfuwu.html');
+		},2000)
+		
+		// 这部分页面往登录页面跳转。
+		var _url_temp_login = window.location.pathname;
+		var _url_array = ['/e4/index_server.html','/e4/guhua.html','/e4/kuandai.html','/e4/shangwangka.html'];
+		for (var i=0; i<_url_array.length;i++) {
+			if (_url_array[i].indexOf(_url_temp_login) != -1) {
+				window.location.href='http://iservice.10010.com/e4/';
+			}
+		}
+	}
+	
+	// top_nav.html 面包线标签
+	var localUrl = window.location.href;
+	if (localUrl.indexOf("query.html") > 0) { // 查询
+		$("#query").show();
+	} else if (localUrl.indexOf("pay.html") > 0) { // 交费
+		$("#pay").show();
+	} else if (localUrl.indexOf("handle.html") > 0) { // 办理
+		$("#handle").show();
+	} else if (localUrl.indexOf("customerService.html") > 0) { // 客服
+		$("#customerService").show();
+	} else if (localUrl.indexOf("bianminfuwu.html") > 0) { // 便民服务
+		$("#bianminfuwu").show();
+	} else if (localUrl.indexOf("featuredarea.html") > 0) { // 特色专区
+		$("#featuredarea").show();
+	}
+	
+	// top_nav.html 自助服务标签事件
+	var labelObj = ["#query a","#pay a","#handle a","#customerService a","#bianminfuwu a","#featuredarea a"]; // 自助服务标签
+	if(!_BaseTools.isLoginNoshow()) {
+		$.each(labelObj,function(i,n){
+			$(n).attr("href","javascript:login_modal()");
+		});		
+	
+	} 
+	
+		// 点击左侧导航按钮，按钮颜色切换
+		$(".cli_ck").click(function() {
+        if ($(this).attr('id')=='guidePos3') {
+
+          $("#guidePos3").find('.number_ff6600').css('background-color','#ff6600');
+        }else {
+          $("#guidePos3").find('.number_ff6600').css('background-color','#908f91');
+        }
+       var pox = $(this).find('.xuebi').css('background-position');
+        var x = pox.slice(0,1);
+         var y = pox.slice(1,1);
+          $(".cli_ck").each(function() {
+         $(".cli_ck"). addClass('on');/*gggg*/
+         $(".cli_ck").css('border-left','3px solid #4f4f4f');
+         $(".cli_ck").find('.menu-text').removeClass('co_o');
+         $(this).find('.xuebi').css('background-position','0px 0');
+       
+         $(this).addClass('bo_der');
+         $(".cli_ck").siblings().find('small').css('display','none');
+        });
+         $(this).css('border-left','3px solid #ff6600');
+         $(this).find('.menu-text').addClass('co_o');
+       $(this).find('.xuebi').css('background-position','-30px 0');
+         $(this).siblings().removeClass('bo_der');
+          $(this).siblings().removeClass('on');/*gggg*/
+         $(this).find('small').css('display','block');
+      });
+	   // 吐槽弹层
+		jQuery('#tucao').click(function(){			 
+			 showid('tucaoTc');
+		 })
+});
+
+function showid(idname){
+	var isIE = (document.all) ? true : false;
+	var isIE6 = isIE&&!window.XMLHttpRequest;
+	var newbox = document.getElementById(idname);
+	newbox.style.zIndex = "9999999";
+	newbox.style.display = "block";
+	newbox.style.position = !isIE6 ? "fixed" : "absolute";
+	newbox.style.top = newbox.style.left = "50%";
+	newbox.style.marginTop = -newbox.offsetHeight / 2 + "px";
+	newbox.style.marginLeft = -newbox.offsetWidth / 2 + "px";
+	var layer = document.createElement("div");
+	layer.id = "layer";
+	layer.style.width = layer.style.height = "100%";
+	layer.style.position = !isIE6 ? "fixed" : "absolute";
+	layer.style.top = layer.style.left = 0;
+	layer.style.backgroundColor = "#888";
+	layer.style.zIndex = "9999998";
+	layer.style.opacity = "0.6";
+	document.body.appendChild(layer);
+
+	function layer_iestyle(){
+		layer.style.width = Math.max(document.documentElement.scrollWidth, document.documentElement.clientWidth) +
+		"px";
+		layer.style.height = Math.max(document.documentElement.scrollHeight, document.documentElement.clientHeight) +
+		"px";
+	}
+	function newbox_iestyle(){
+		newbox.style.marginTop = document.documentElement.scrollTop - newbox.offsetHeight / 2 + "px";
+		newbox.style.marginLeft = document.documentElement.scrollLeft - newbox.offsetWidth / 2 + "px";
+	}
+	if (isIE) {
+		layer.style.filter = "alpha(opacity=60)";
+	}
+	if (isIE6) {
+		layer_iestyle();
+		newbox_iestyle();
+		window.attachEvent("onscroll", function(){
+			newbox_iestyle();
+		})
+		window.attachEvent("onresize", layer_iestyle);
+	}
+}
+//个人信息展示
+function detail(){
+	
+	detailInfo();
+	argUrl = "/searchPerInfoUser/";
+	radomT = "?_=" + (new Date()).getTime();
+	var url = E3CommonsVariables.RequestPrefixQuery() + argUrl + radomT;
+	jQuery.ajax({
+		url : url,
+		type : "POST",
+		data : {},
+		async : true,
+		dataType : "JSON",
+		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		success : function(data) {
+			meNetType=data.userInfo.userNettype;
+			meCurrentId = data.userInfo.currentId;
+			personal_info_cache = data;	
+	   //头部信息
+		if(_BaseTools.isLogin()){
+		$('#isLogin_out1_id').show();
+		$('#isLogin_out2_id').show();
+		$('#isnotLog1_out_id').hide();	
+		$('#isnotLog2_out_id').hide();
+		
+		var userName;
+		if(data.userInfo.loginType == "05"){
+			var v = data.userInfo.currentId.indexOf("@");
+			userName = data.userInfo.currentId.substr(0,3) + "*****@" + data.userInfo.currentId.substr(v+1);
+		}
+		else if(data.userInfo.nickName!=null){
+			userName=data.userInfo.nickName;
+		}else{
+			userName=data.userInfo.mobile;
+		}
+		// 吐槽手机号
+		if(null!=data.userInfo.mobile && "" != data.userInfo.mobile){
+			$("#telephone").attr("value",data.userInfo.mobile);
+		}
+		$('#show_user_name_id').html(userName);
+		  }else{
+				$('#isLogin_out1_id').hide();
+				$('#isLogin_out2_id').hide();
+				$('#isnotLog1_out_id').show();	
+				$('#isnotLog2_out_id').show();
+		  }	
+		
+			if (null != data && "" != data) {
+					if(data.limited == "00"){
+						return;
+					}
+					if(data.limited == "01"){
+						return;
+					}
+					if (null != data.acclimit) {
+						if ("true"==data.acclimit) {
+							return;
+						}
+					}
+					if( data.ipValidate != null ){
+						return;
+					}
+				}
+			//获取用户等级
+			if(data.userInfo.userNettype != "" && data.userInfo.userNettype != "fix"){
+				if(data.userInfo.custlvl != null && data.userInfo.custlvl !=""){
+					custlv1=data.userInfo.custlvl
+				}else{
+					custlv1="无"
+				}
+			}else{
+				custlv1="无"
+			}
+			
+			//首页
+			//首页手机号码
+			if(data.userInfo.mobile != "11111111111"){
+			    $("#menu_usernumber").html(data.userInfo.mobile+'<span class="caret">');
+			}
+			if(custlv1== "钻石级"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/purple.png"></i>')
+			}else if(custlv1== "金级"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/golden.png"></i>')
+			}else if(custlv1== "银级"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/yin.png"></i>')
+			}else if(custlv1== "忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i>')
+			}else if(custlv1== "贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i>')
+			}else if(custlv1== "贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i>')
+			}else if(custlv1== "一星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "一星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "一星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "一星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}                                     
+		}
+	});
+}
+
+
+function detailInfo(){
+	argUrl = "/searchPerInfo/";
+	radomT = "?_=" + (new Date()).getTime();
+	var url = E3CommonsVariables.RequestPrefixQuery() + argUrl + radomT;
+	jQuery.ajax({
+		url : url,
+		type : "POST",
+		data : {},
+		async : true,
+		dataType : "JSON",
+		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		success : function(data){
+			//标头
+			if(data.userInfo.loginType=="05"){
+				
+				if(data.userInfo.userNettype == "fix" && data.result.MyDetail != null &&  data.result.MyDetail.usernumber != null){
+					$("#title_usernumber").html(data.result.MyDetail.usernumber)
+				}else{
+					$("#title_usernumber").html(data.userInfo.mobile)
+				}
+			}else{
+				$("#title_usernumber").html(data.userInfo.mobile)
+			}
+			if(data.result.MyDetail==undefined){
+				return
+			}
+			if(data.userInfo.userNettype=="fix"){
+				$("#title_custname").html(data.result.MyDetail.accname);
+				$("#my_package_leavePackage").html("");
+			}else{
+				$("#title_custname").html(data.result.MyDetail.custname);
+			}
+			/*if(data.userInfo.userNettype=="fix"){
+				
+				$("#title_custname").html(data.result.MyDetail.accname)
+			}else{
+				$("#title_custname").html(data.result.MyDetail.custname)
+			}
+*/
+			if(data.userInfo.userNettype=="fix"){
+				$("#my_package_subscrbstat").html(data.result.MyDetail.subscrbstat)
+				$("#my_package_custname").html(data.result.MyDetail.accname)
+				$("#my_package_landlvl").html(data.result.MyDetail.landlvl)
+				$("#my_package_roamstat").html(data.result.MyDetail.roamstat)
+				$("#my_package_opendate").html(data.result.MyDetail.opendate)
+				$("#my_package_brand").html(data.result.MyDetail.brand);
+				$("#my_package_payType").html(data.result.payType)
+			}else{
+				$("#my_package_subscrbstat").html(data.result.MyDetail.subscrbstat)
+				$("#my_package_custname").html(data.result.MyDetail.custname)
+				$("#my_package_landlvl").html(data.result.MyDetail.landlvl)
+				$("#my_package_roamstat").html(data.result.MyDetail.roamstat)
+				$("#my_package_opendate").html(data.result.MyDetail.opendate)
+				$("#my_package_brand").html(data.result.MyDetail.brand)
+				$("#my_package_payType").html(data.result.payType);
+				$("#my_package_pukcode").html(data.result.pukcode)
+			}
+			
+			//我的套餐
+			if(data.userInfo.userNettype== "4G"){
+				
+				if(data.result.fourPackage != null && data.result.fourPackage.productinfo[0].productname != null){
+					$("#my_package_productname").html(data.result.fourPackage.productinfo[0].productname)
+				}else{
+					$("#my_package_productname").html(data.userInfo.packageName)
+				}
+				
+				if(data.result.fourPackage != null && data.result.fourPackage.productinfo[0].productfee != null && data.result.fourPackage.productinfo[0].productfee != "null"){
+					$("#my_package_packageFee").html(data.result.fourPackage.productinfo[0].productfee+'元/月')
+				}else{
+					if(data.userInfo.packageFee != null){
+						$("#my_package_packageFee").html(data.userInfo.packageFee)
+					}else{
+						$("#my_package_packageFee").html('以套餐资费为准')
+					}
+				}
+			}else if(data.userInfo.userNettype== "3G" ){
+				$("#my_package_productname").html(data.userInfo.packageName)
+				if(data.userInfo.packageFee != null){
+					$("#my_package_packageFee").html(data.userInfo.packageFee)
+				}else{
+					$("#my_package_packageFee").html('以套餐资费为准')
+				}
+			}else if(data.userInfo.userNettype== "2G"){
+				if(data.userInfo.packageName!= null&&data.userInfo.packageName!= ""){
+					$("#my_package_productname").html(data.userInfo.packageName);
+					$("#my_package_packageFee").html('以套餐资费为准')
+				}else{
+					$("#my_package_productname").html("2G套餐无法显示,请升级4G套餐.");
+					$("#my_package_packageFee").html('以套餐资费为准')
+				}
+				
+			}else if(data.userInfo.userNettype== "fix"){
+				$("#my_package_productname").html(data.userInfo.packageName);
+				$("#my_package_packageFee").html('以套餐资费为准')
+			}
+			
+			
+
+			//我的状态开通4G网络
+			if(detail_cache==undefined){
+				detail_cache = new Object();
+			}
+			//我的套餐
+			if(data.userInfo.userNettype== "4G"){
+				detail_cache.openfournet="4G";
+			}else if(data.userInfo.userNettype== "3G" ){
+				//我的状态开通4G网络
+				$("#openfournet_state").show()
+			}else if(data.userInfo.userNettype== "2G"){
+				//我的状态开通4G网络
+				$("#openfournet_state").show()
+			}
+			
+			if(data.userInfo.userNettype=="fix"){
+				$("#my_package_subscrbstat").html(data.result.MyDetail.subscrbstat)
+				$("#my_package_custname").html(data.result.MyDetail.accname)
+				$("#my_package_landlvl").html(data.result.MyDetail.landlvl)
+				$("#my_package_roamstat").html(data.result.MyDetail.roamstat)
+				$("#my_package_opendate").html(data.result.MyDetail.opendate)
+				$("#my_package_brand").html(data.result.MyDetail.brand);
+				$("#my_package_payType").html(data.result.payType)
+			}else{
+				$("#my_package_subscrbstat").html(data.result.MyDetail.subscrbstat)
+				$("#my_package_custname").html(data.result.MyDetail.custname)
+				$("#my_package_landlvl").html(data.result.MyDetail.landlvl)
+				$("#my_package_roamstat").html(data.result.MyDetail.roamstat)
+				$("#my_package_opendate").html(data.result.MyDetail.opendate)
+				$("#my_package_brand").html(data.result.MyDetail.brand)
+				$("#my_package_payType").html(data.result.payType);
+				$("#my_package_pukcode").html(data.result.pukcode)
+			}
+			
+			
+			//我的信息
+			if(data.userInfo.loginType=="05"){
+				// 判断我的其他号码显示还是隐藏  规则： 只有手机号码显示
+				if(data.userInfo.userNettype !="fix"){
+					$("#Myothernum").show();
+				}else{
+					$("#Myothernum").hide();
+				}
+				if(data.userInfo.userNettype == "fix" && data.result.MyDetail != null &&  data.result.MyDetail.usernumber != null){
+					$("#my_info_usernumber").html(data.result.MyDetail.usernumber)
+				}else{
+					$("#my_info_usernumber").html(data.userInfo.mobile +" ")
+				}
+			}else{
+				// 判断我的其他号码显示还是隐藏  规则： 只有手机号码显示
+				if(data.userInfo.userNettype !="fix"){
+					$("#Myothernum").show();
+				}else{
+					$("#Myothernum").hide();
+				}
+				$("#my_info_usernumber").html(data.userInfo.mobile  +" ")
+			}
+			//客户经理信息
+			if(data && data.result != null&& data.result.MyDetail != null &&  data.result.MyDetail.managername){
+				$("#my_info_managername").html(data.result.MyDetail.managername);
+			}else{
+				$("#my_info_managername").html("无");
+			}
+			if(data && data.result != null&& data.result.MyDetail != null &&  data.result.MyDetail.managercontact){
+				$("#my_info_managercontact").html(data.result.MyDetail.managercontact);
+			}else{
+				$("#my_info_managercontact").html("10018");
+			}
+			
+			if(data.userInfo.userNettype != "" && data.userInfo.userNettype != "fix"){
+				if(data.result.MyDetail.custlvl != null && data.result.MyDetail.custlvl !=""){
+					custlv1=data.result.MyDetail.custlvl
+				}else{
+					custlv1="未评级"
+				}
+			}else{
+				custlv1="未评级"
+			}
+			if(custlv1== "钻石级"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/purple.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}else if(custlv1== "金级"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/golden.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}else if(custlv1== "银级"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/yin.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}else if(custlv1== "忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}else if(custlv1== "贵宾用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}else if(custlv1== "贵宾忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}else if(custlv1== "一星用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "一星忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "一星贵宾用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "一星贵宾忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "二星用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "二星忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "二星贵宾用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "二星贵宾忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "三星用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "三星忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "三星贵宾用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "三星贵宾忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>生日问候</li><li>免打扰服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "四星用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "四星忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "四星贵宾用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "四星贵宾忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途</li><li>预约办理业务<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "五星用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>免费补卡服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "五星忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>免费补卡服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "五星贵宾用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>免费补卡服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else if(custlv1== "五星贵宾忠诚用户"){
+				$("#detailed_custlvl").html('<span>用户等级：</span><i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+				$("#my_info_Rank_p").show();
+				$("#my_info_Rank_privilege").html('<li>10010客服热线优先接入</li><li>营业厅优先办理业务</li><li>免费补卡服务</li><li>移动业务紧急开机服务(预付费用户暂不支持该项服务)</li><li>免预存开通国际漫游和国际长途<a href="/e4/query/data_level.html" target="view_frame" style="text-decoration: underline;">更多>></a></li>')
+			}else{
+				$("#detailed_custlvl").html('<span>用户等级：</span>'+custlv1+'<a href="/e4/query/data_level.html" target="view_frame" style="float:right ">等级说明</a>')
+			}
+			
+			
+			
+			if(custlv1== "钻石级"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/purple.png"></i>')
+			}else if(custlv1== "金级"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/golden.png"></i>')
+			}else if(custlv1== "银级"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/yin.png"></i>')
+			}else if(custlv1== "忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i>')
+			}else if(custlv1== "贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i>')
+			}else if(custlv1== "贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i>')
+			}else if(custlv1== "一星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "一星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "一星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "一星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "二星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "三星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "四星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星贵宾用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}else if(custlv1== "五星贵宾忠诚用户"){
+				$("#menu_custlvl").html('<i><img src="//m2.img.10010.com/e4/images/vip.png"></i><i><img src="//m2.img.10010.com/e4/images/HEART.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i><i><img src="//m2.img.10010.com/e4/images/star.png"></i>')
+			}
+			if(custlv1=="无"){
+				$("#menu_custlvl_message").html("用户等级："+custlv1)
+			}else{
+				$("#menu_custlvl_message").html(custlv1)
+			}
+			//2015年12月11日注掉我的勋章，未知暂空
+		/*	if(data.userInfo.userNettype!= "fix"){
+				userNettype = data.userInfo.userNettype
+				is_vip = data.userInfo.is_vip
+				if(userNettype == "4G"){
+					$("#my_detail_userNettype").html('<img src="//m2.img.10010.com/e4/images/wo_vip_img2.jpg">')
+				}
+				
+				if(is_vip != null && is_vip != ""){
+					$("#my_detail_is_vip").html('<img src="//m2.img.10010.com/e4/images/wo_vip_img4.jpg">')
+				}
+			}*/
+			//我的资料
+			if(data.userInfo.userNettype=="fix"){
+				var sex = data.result.MyDetail.custsex;
+				$("#my_data_custname").html(data.result.MyDetail.accname);
+				if(sex==""|| sex==undefined){
+					$("#custsex").html("不详");
+				}else{
+					$("#custsex").html(sex);
+				}
+				var num =data.result.MyDetail.usernumber;
+				if(num==""||num==undefined){
+					$("#my_data_usernumber").html("无");
+				}else{
+					$("#my_data_usernumber").html(num);
+				}
+				var cert = data.result.MyDetail.certaddr;
+				if(cert ==""||cert==undefined){
+					$("#certaddr").html("无");
+				}else{
+					$("#certaddr").html(cert);
+				}
+			}else{
+				var sex = data.result.MyDetail.custsex;
+				$("#my_data_custname").html(data.result.MyDetail.custname)
+				if(sex==""|| sex==undefined){
+					$("#custsex").html("不详");
+				}else{
+					$("#custsex").html(sex);
+				}
+				
+				var num =data.result.MyDetail.usernumber;
+				if(num==""||num==undefined){
+					$("#my_data_usernumber").html("无");
+				}else{
+					$("#my_data_usernumber").html(num);
+				}
+				var cert = data.result.MyDetail.certaddr;
+				if(cert ==""||cert==undefined){
+					$("#certaddr").html("无");
+				}else{
+					$("#certaddr").html(cert);
+				}
+			}
+			var id_card;
+			if(data.result.MyDetail.certtype ==undefined){
+				id_card = data.result.MyDetail.certnum
+			}else{
+				id_card = data.result.MyDetail.certtype+data.result.MyDetail.certnum
+			}
+			$("#certtype_certnum").html(id_card);
+			$("#service_password").html('*******<a href="/e4/transact/basic/transact_password-iframe.html">修改密码</a>');
+		}
+	});
+}
+//点击头像旁边的个人信息跳转
+function tiaozhuan(){
+	window.location.href='http://iservice.10010.com/e4/query/basic/personal_xx_iframe.html';
+}
+
+function switch_modal(oldmodal,newmodal){
+	$('#'+oldmodal).modal('hide')
+	$('#'+newmodal).modal('show')
+}
+
+function close_iframe(fun){
+	if(fun=='sureFun'){
+		document.getElementById("ifram_eavatar_editor").contentWindow.sureFun()
+	}else if(fun=='deleteLocalTempImage'){
+		document.getElementById("ifram_eavatar_editor").contentWindow.deleteLocalTempImage()
+		switch_modal('avatar-editor','profile-modal')
+	}
+}
+
+//未读消息数量
+function setNoReadMsgCount(){
+	$.ajax({
+		//url: E3CommonsVariables.RequestPrefix() + '/query/message/noReadMsgCount'+ "?_=" + (new Date()).getTime(),
+		//url: E3CommonsVariables.RequestPrefix() + '/query/message/navNoReadAndNewMsg'+ "?_=" + (new Date()).getTime(),
+		url: E3CommonsVariables.RequestPrefix() + '/query/message/pageList'+ "?_=" + (new Date()).getTime(),
+		dataType:'JSON',
+		data:{
+			//active:'active',
+			//count:2,
+			currentPage: 1,
+			pageSize: 2
+			
+		},
+		success: function(data){
+			//console.log(JSON.stringify(data));
+			$('#header-msg-no-read-count').text(data.noReadCount);
+			$('#msg-list-size').val(data.canReadCount);
+			//展示两条最新消息
+			var htmlMsg = '';
+			if(data.pageList && data.pageList.length){
+				$.each(data.pageList, function(){
+					//console.log(JSON.stringify(this));
+					htmlMsg += '<dt>'+ this.pushStartTime +'</dt><dd>|&nbsp;'+ this.msgContent +'</dd>';
+				});
+				htmlMsg += '<dd><a role="button" class="nav-list-item" title="消息" href="/e4/query/information.html">更多>></a></dd>';
+			}
+			$('#header-msg-new').html(htmlMsg);
+			$('#msg-list-size').val(data.msgListSize | 0);
+			
+		}
+	});
+	//$('#header-msg-no-read-count').text(11);
+	//$('#msg-list-size').val(18);
+}
+
+//我的状态
+var my_state = {
+		init : function(){
+			if(detail_cache==undefined){
+				detail_cache = new Object();
+			}
+			
+			if(detail_cache.long==null){
+				my_state.longinit()
+			}
+			if(detail_cache.roam==null){
+				my_state.roaminit()
+			}
+			if(detail_cache.forward==null){
+				my_state.forwardinit()
+			}
+			if(detail_cache.openfournet==null){
+				my_state.openfournetinit()
+			}
+			
+		},
+		longinit : function (){
+			TransactMain.loadData("/querylong",null,"my_state.longsucessQuery(data)");
+		},
+		longsucessQuery : function(data){
+			detail_cache.long=data;
+			if(data.isLongError=="true"){
+				$("#long_state").html("无")
+			}else{
+				if(data.queryInfo.openflag=="1"){
+					$("#long_state").html("已开通")
+					
+				}else if(data.queryInfo.openflag=="0"){
+					$("#long_state").html("已关闭")
+					
+				}
+				
+				if(data.queryInfo.limitFlag==true){
+					if(data.queryInfo.openflag=="0"){
+						$("#long_state").html("已关闭")
+					}else if(data.queryInfo.openflag=="1"){
+						$("#long_state").html("已开通")
+					}else{
+						$("#long_state").html("无")
+					}
+				}else{
+					$("#long_state").html("无")
+				}
+			}
+			
+		},
+		roaminit : function(){
+			TransactMain.loadData('/roamquery',null,'my_state.roamsucessQuery(data)');
+		},
+		roamsucessQuery : function(data){
+			detail_cache.roam=data;
+			if(!data.rspArgs.success){
+				$("#roam_state").html("无")
+			}else{
+				if(data.rspArgs.openflag=='1'){
+					$("#roam_state").html("已开通")
+					//$("#roam_state p:nth-child(1) a").html("关 闭")
+				}else if(data.rspArgs.openflag=='0'){
+					$("#roam_state").html("已关闭")
+					//$("#roam_state p:nth-child(1) a").html("开 通")
+				}else{
+					$("#roam_state").html("无")
+				}
+			}
+		},
+		forwardinit : function(data){
+			TransactMain.loadData("/forwardInfo/", null,'my_state.forwardsucessQuery(data)');
+			
+		},
+		forwardsucessQuery : function(data){
+			detail_cache.forward=data;
+			if(data.forwardInfoResult!=null){
+				if (data.forwardInfoResult.forwardlist != null) {
+					if(data.forwardInfoResult.forwardlist.length>1){
+						$("#forward_state").html("已开通")
+						//$("#forward_state p:nth-child(1) a").html("关 闭")
+					}else{
+						$("#forward_state").html("已关闭")
+						//$("#forward_state p:nth-child(1) a").html("开 通")
+					}
+				}else{
+					$("#forward_state").html("无")
+				}
+			}else{
+				$("#forward_state").html("无")
+			}
+		},
+		openfournetinit : function(){
+			TransactMain.loadData("/openfourginternetquery/",null,'my_state.openfournetsucessQuery(data)');
+		},
+		openfournetsucessQuery : function(data){
+			detail_cache.openfournet=data;
+			if(data.issuccess){
+				if(data.datanetworktype != null){
+					if(data.datanetworktype=='4'){
+						$("#openfournet_state span:nth-child(2)").html("已开通")
+						//$("#openfournet_state p:nth-child(1) a").html("关 闭")
+					}else{
+						$("#openfournet_state span:nth-child(2)").html("已关闭")
+						//$("#openfournet_state p:nth-child(1) a").html("开 通")
+					}
+				}else{
+					$("#openfournet_state span:nth-child(2)").html("无")
+				}
+			}else{
+				$("#openfournet_state span:nth-child(2)").html("无")
+			}
+		}
+}
+
+
+function open_detail(){
+	my_state.init();
+	if(menutype != "1100"){
+	    detailInfo();
+	    //合约期
+	    contractPeriod.init();
+	    $('#profile-modal').modal('show');
+	}
+	
+}
+// 通过返回地区码，网别，付费类型拼接导航栏地址
+function load(data) {
+
+	//邮箱登陆非绑定号码 直接跳转到绑定页面
+	 if(data && data.menutype && data.menutype =="1100" ){
+		 //console.log("data.menutype ="+data.menutype)
+		 if(window.parent.location.href.indexOf("/receipt-iframe.html") > -1
+			 || window.parent.location.href.indexOf("/query.html") > -1
+			 || window.parent.location.href.indexOf("/featuredarea.html") > -1){
+		 }else{
+			window.parent.location.href = "https://uac.10010.com/cust/bindnum/bindnumInit";
+			return;
+		 }
+	 }
+	// 广东省把 办流量包 指向 日租·假日畅游流量包 办理业务
+	if (data.pcode == "051") {
+		$("#flowpay").show();
+	}
+	//---这几行是判断登陆的号码是否为西藏的，然后将老用话专区链接替换
+	if('079'==data.pcode){
+		$('#OldUserLink').attr("href","http://www.10010.com/static/homepage/subjectpage/57900000251770.html");
+  	}else{
+  		$('#OldUserLink').attr("href","http://www.10010.com/pushpage/59800000169773.html");
+  	}
+	
+	// 登录后导航路径
+	var menu_login = "/e4/WT4/WT4_MENU_4_001/";
+	if (data.menutype != null && data.menutype != "") {
+	 	menutype = data.menutype;
+		menu_login = menu_login + data.pcode+'/'+data.nettype+data.pay+'_'+data.menutype+'/';
+	} else {
+		menu_login = menu_login + data.pcode+'/'+data.nettype+data.pay+'/';
+	}
+	//如果付费类型为空 则加载未登录的导航
+	if(data.pay==null||data.pay==""||data.pay==undefined){
+		menu_login=menu_notlogin;
+		$("#wrongTc22_title").html("");
+		$("#wrongTc22_coment").html("尊敬的客户，出了一点点问题，请您稍候再试或立即反馈我们处理，给您带来不便敬请谅解！");
+		$("#wrongTc22_title").parent().find("a").attr("onclick","$('#wrongTc22').hide()");
+		$("#wrongTc22_coment").parent().find("input").attr("value","重新登录").attr("onclick","$('#wrongTc22').hide();log_out();");
+		_BaseTools.showid("wrongTc22");
+	}
+	if (data.nettype != '15' && data.menutype !="1100") { // 个人信息  上网卡  邮箱登录未绑定号码 隐藏
+		$('#personInfo').attr("onclick","tiaozhuan()");
+		$('#menu_userpic').parent().attr('onclick', 'open_detail()');
+	} else {
+		$('#personInfo').hide();
+	}
+	$('#menu_query').attr('href',menu_login + 'query.html');
+	$('#menu_pay').attr('href',menu_login + 'pay.html');
+	$('#menu_hadle').attr('href',menu_login + 'handle.html');
+	$('#menu_customer').attr('href',menu_login +'customerService.html');
+	$('#menu_service').attr('href',menu_login +'bianminfuwu.html');
+	$('#menu_feature').attr('href',menu_login +'featuredarea.html');
+	setTimeout(function(){
+		$('#bisTran').attr('href',menu_login +'handle.html');
+		$('#bisQuery').attr('href',menu_login +'query.html');
+		$('#bisFee').attr('href',menu_login +'pay.html');
+		$('#bisKefu').attr('href',menu_login +'customerService.html');
+		$('#bisTese').attr('href',menu_login +'featuredarea.html');
+		$('#bisBianminfuwu').attr('href',menu_login +'bianminfuwu.html');
+	},2000)
+	
+	var url_temp = '';
+	// 首页自助登录成条
+	$("#bd_li").hide();
+	if (data.nettype=='11' || data.nettype=='01' || data.nettype=='02') { // 2,3,4G手机用户
+		url_temp = '/e4/index_server.html';
+		if(data.menutype == "1100"){
+		    $(".left_nav .photo a").attr("onclick","");
+		    $(".dropHover #numList").remove();
+		}
+	} else if (data.nettype=='04' || data.nettype=='05' || data.nettype=='13' || data.nettype=='14') { // 宽带
+		url_temp = '/e4/kuandai.html';
+		//宽带增加 帐号绑定
+		$("#bd_li").show();
+	} else if (data.nettype=='03' || data.nettype=='12') { // 固话
+		url_temp = '/e4/guhua.html';
+	} else { // 上网卡
+		url_temp = '/e4/shangwangka.html';
+	}
+	$('#self-service').attr('href',url_temp);
+	$('#bisQuery-self').attr('href',url_temp);
+	$('#bisBianminfuwu-self').attr('href',url_temp);
+	$('#bisFee-self').attr('href',url_temp);
+	$('#bisTran-self').attr('href',url_temp);
+	$('#bisTese-self').attr('href',url_temp);
+	$('#bisKefu-self').attr('href',url_temp);	
+	
+	// top_nav.html 自助服务标签事件
+	var labelObj = ["#query a","#pay a","#handle a","#customerService a","#bianminfuwu a","#featuredarea a"]; // 自助服务标签
+	if(!_BaseTools.isLoginNoshow()) {
+		$.each(labelObj,function(i,n){
+			$(n).attr("href","javascript:login_modal()");
+		});		
+	
+	} else {
+		$.each(labelObj,function(i,n){
+			$(n).attr("href",url_temp);
+		});	
+	}
+}
+var _HEADER = {
+		go : function ()
+		{
+		window.history.go(-1);
+		},
+		init:function(){
+			$.ajax({
+				type:"post",
+				url:E3CommonsVariables.RequestPrefix() + "/bind",
+				async : true,
+				dataType : "JSON",
+				beforeSend : function() {
+					//$("#loadingGif").show();
+					//$("#loadingBg").show();
+				},
+				complete: closeHeaderMask,
+				success:function(data){
+					_HEADER.callBack(data);
+				}
+			});
+		},
+		callBack:function(data){
+			
+			if(data==null||data==''|| data.bindnumber == null){
+				$('#numList li:contains("号码切换")').remove();
+			}else{
+					$('#numList li:contains("号码切换")').show();
+					$('#numList li').remove(".numChange");
+					var numbers = data.bindnumber;
+					$.each(numbers, function(idx, rst) {
+						
+						$('#numList').append('<li class="numChange" onclick="_HEADER.switchMobile(this)"><a href="#">'+rst+'</a></li>');	
+					})
+					$('#numList').append('<li class="numChange"><a target="_blank" href="https://uac.10010.com/cust/bindnum/bindnumInit">编辑号码</a></li>');
+			}
+		},
+		//切换号码
+		switchMobile:function(phoneCode){
+			$(phoneCode).parent().hide();
+			phoneCode = $.trim($(phoneCode).find('a').html());
+			var jut = $.trim($.cookie("JUT"));
+			var getUrl = "https://uac.10010.com/portal/SwitchProductCookie?callback=?"; // 现网的地址
+			var params = {productID:phoneCode,JsonUserToken:jut};
+			$.getJSON(getUrl, params, function(jsonData) {
+				//切换成功
+				if (jsonData.resultCode) {
+					//添加成功后的处理逻辑
+					CommonMain.loadData("/l",{param:"switch"},'_HEADER.switchResult(data)');
+				} 
+				//切换失败
+				else {
+					window.location.reload();
+				}
+			});	
+		},
+		test : function(){
+			CommonMain.loadData('/info',null,'load(data)');
+		},
+		switchResult:function(data){
+			setTimeout("test()","4000");
+			if(data.result){
+				if (data.nettype=='11' || data.nettype=='01' || data.nettype=='02') { // 2,3,4G手机用户
+					window.location.href='http://iservice.10010.com/e4/index_server.html';
+				} else if (data.nettype=='04' || data.nettype=='05' || data.nettype=='13' || data.nettype=='14') { // 宽带
+					window.location.href='http://iservice.10010.com/e4/kuandai.html';
+				} else if (data.nettype=='03' || data.nettype=='12') { // 固话
+					window.location.href='http://iservice.10010.com/e4/guhua.html';
+				} else { // 上网卡
+					window.location.href='http://iservice.10010.com/e4/shangwangka.html';
+				}
+			}else{
+				$('#login_footer').hide();
+				$('div#layer').remove();
+			}
+		}
+};
+
+function closeHeaderMask (XMLHttpRequest, textStatus){
+	//flag变量在commonsBase.js中定义
+	//当flag为0时，说明业务数据逻辑层没有加载完成，而这时候用户信息已加载完成，记录flag为1
+	if (flag != undefined && flag == "0") {
+		flag = "1";
+		//记录reqFlag为2时，说明已经加载过用户信息了
+		headerReqFlag = "2";
+	} else {
+		//当reqFlag为2时，说明已经加载过了，这时候只需要还原成1就可以
+		if (headerReqFlag == "2") {
+			headerReqFlag = "1";
+		} else {
+			//当第一次请求时，并且flag为1时，说明用户信息已加载完毕，关闭蒙层就可以
+			if (!recordFlag) {
+				setTimeout("$('#loadingGif,#loadingBg').hide();",1000);
+			}
+			if (commonReqFlag == "2") {
+				if (recordFlag) {
+					headerReqFlag = "2";
+				} else {
+					setTimeout("$('#loadingGif,#loadingBg').hide();",1000);
+				}
+			}
+			if (commonReqFlag == "3") {
+				setTimeout("$('#loadingGif,#loadingBg').hide();",1000);
+				headerReqFlag = "1";
+				commonReqFlag = "1";
+			}
+		}
+	}
+}
+//切换号码
+function numChange(s)
+{	 $(s).hide();
+	 $(s).siblings().hide();
+	 $(s).siblings(".numChange").show()
+	
+}
+
+//登录弹框
+function login_modal(){
+	$('#login').modal('show')
+}
+$(document).ready(function() {
+		_HEADER.init();
+});
