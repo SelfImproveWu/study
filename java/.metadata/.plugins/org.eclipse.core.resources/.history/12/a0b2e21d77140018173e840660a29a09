@@ -1,0 +1,62 @@
+package Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import entity.User;
+import util.DAOUtil;
+
+public class UserService {
+	
+	/**
+	 * 校验登录情况
+	 * @param user
+	 * @return
+	 */
+	public boolean loginService(User user){
+			boolean isLogin=false;
+			try {
+				String loginName = user.getLoginName(); 
+				String password = user.getPassword();
+				String sql = "SELECT * FROM user WHERE loginName ='zhangsan'";
+//				Map<String,Object> params = new HashMap<String,Object>();
+//				params.put("loginName", loginName);
+//				
+				//List<Object> params = new ArrayList<Object>();
+				//params.add(loginName);
+				DAOUtil dao = new DAOUtil();
+				User tempUser = new User();
+				@SuppressWarnings("unchecked")
+				User user1=  (User)dao.get(User.class, sql, null);//获取相同登录名的用户数据集合
+//				for(User use:resultList){
+//					tempUser = use;
+//				}
+				isLogin = tempUser.getPassword() ==password?true:false;//判断密码是否相同
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return isLogin;
+	};
+	public void addLoginLog(User user){
+		StringBuilder sbSql = new StringBuilder();
+		sbSql.append("INSERT INTO userLogin ");
+		sbSql.append("VALUES(?,?,?,?,?,?)");
+		DAOUtil dao = new DAOUtil();
+		
+		dao.update(sbSql.toString(), user);
+		
+	}
+	public static void main(String args[]){
+		UserService us = new UserService();
+		User user = new User();
+		user.setLoginName("zhangsan");
+		user.setPassword("zhangsan");
+		boolean bl = us.loginService(user);
+		System.out.println("bl----"+bl);
+		
+	}
+}

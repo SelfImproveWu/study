@@ -1,0 +1,89 @@
+﻿@charset "utf-8";
+/*button {border-radius: 4px; background-color: #c8e1ff;padding:3px 6px 3px 6px; border: 0px solid #111111;}*/
+body,nav,dl,dt,dd,p,h1,h2,h3,h4,ul,ol,li,input,button,textarea,footer,div,table{margin:0;padding:0}
+body {margin:0;padding:0;text-align:left;font-family:'SimHei','helvetica','arial'}
+h1,h2,h3,h4,h5,h6{font-size:100%}form{display:inline}ul,ol{list-style:none}a{text-decoration:none;color:#1a1a1a}a:hover,a:active,a:focus{color:#1c5aa2;text-decoration:none;}a:active{color:#aaa;}img{vertical-align:middle;border:0;-ms-interpolation-mode:bicubic;-webkit-tap-highlight-color:rgba(0,0,0,0);}button,input,select,textarea{font-size:100%;vertical-align:middle;outline:none;}textarea{resize:none}button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;}input:focus:-moz-placeholder,input:focus::-webkit-input-placeholder{color:transparent}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}table{border-collapse:collapse;border-spacing:0}
+div{background-color:transparent;}
+.clear{height:0; line-height:0; font-size:0; clear:both;}
+/*清除浮动 S */
+.clearfix {*zoom: 1; width:0px;height:0px;}
+.clearfix:before,.clearfix:after {display: table;line-height: 0;content: "";}
+.clearfix:after {clear: both;}
+/*清除浮动 E */
+.clear {clear: both;}
+.smooth_animation_300 { transition-duration: 300ms;-moz-transition-duration:300ms;-webkit-transition-duration:300ms;-o-transition-duration: 300ms;}
+.smooth_animation_500 { transition-duration: 500ms;-moz-transition-duration:500ms;-webkit-transition-duration:500ms;-o-transition-duration: 500ms;}
+.smooth_animation_800 { transition-duration: 800ms;-moz-transition-duration:800ms;-webkit-transition-duration:800ms;-o-transition-duration: 800ms;}
+.smooth_animation_1000 { transition-duration: 1000ms;-moz-transition-duration:1000ms;-webkit-transition-duration:1000ms;-o-transition-duration: 1000ms;}
+
+
+#debug_info{ position: absolute; top: 0px;left: 0px; width: 100%;height: 200px;
+             overflow-y: visible; color:#000000; font-size: 14px;z-index: 999;/*
+             scrollbar-face-color: #ffffff;  
+             scrollbar-highlight-color: #ffffff;
+             scrollbar-shadow-color: #919192;  
+             scrollbar-3dlight-color:#ffffff; 
+             scrollbar-arrow-color: #919192; 
+             scrollbar-track-color: #ffffff; 
+             scrollbar-darkshadow-color: #ffffff;*/
+             border:0px solid #ffffff;
+             background-image: url('../image/common/000000_1x1a60.png');
+}
+/* 动画Focus相关 */
+.focus1{background-image:url('../image/imgFocus/left_top.png');background-repeat:no-repeat;width:15px;height:15px;}
+.focus2{background-image:url('../image/imgFocus/top.png');background-repeat:repeat-x;}
+.focus3{background-image:url('../image/imgFocus/right_top.png');background-repeat:no-repeat;width:15px;height:15px;}
+.focus4{background-image:url('../image/imgFocus/left.png');background-repeat:repeat-y;}
+.focus5{/*background-color:#ff3300;*/}
+.focus6{background-image:url('../image/imgFocus/right.png');background-repeat:repeat-y;}
+.focus7{background-image:url('../image/imgFocus/left_bottom.png');background-repeat:no-repeat;width:15px;height:15px;}
+.focus8{background-image:url('../image/imgFocus/bottom.png');background-repeat:repeat-x;}
+.focus9{background-image:url('../image/imgFocus/right_bottom.png');background-repeat:no-repeat;width:15px;height:15px;}
+.focus_table{position:relative;width:100%;height:100%;border:0px solid #000000;}
+#focus_container{position:absolute;top:10px;left:10px;z-index:999;visibility:hidden;bo-rder:7px ;bo-rder: 8px solid #ffffeb;/*background-color:#0000ff;*/ /*width:600px;height:600px;*//*这里先足够大*/}
+
+
+/* 针对有白线的问题兼容 */
+.focus1b{background-image:url('../image/focus/yellow01.png');background-repeat:no-repeat;width:7px;height:7px;}
+.focus2b{background-image:url('../image/focus/yellow02.png');background-repeat:repeat-x; background-position:0px -1px;}
+.focus3b{background-image:url('../image/focus/yellow03.png');background-repeat:no-repeat;width:7px;height:7px;}
+.focus4b{background-image:url('../image/focus/yellow04.png');background-repeat:repeat-y; background-position:-1px 0px;}
+.focus5b{/*background-color:#ff3300;*/}
+.focus6b{background-image:url('../image/focus/yellow06.png');background-repeat:repeat-y; background-position:0px 0px;}
+.focus7b{background-image:url('../image/focus/yellow07.png');background-repeat:no-repeat;width:7px;height:7px;}
+.focus8b{background-image:url('../image/focus/yellow08.png');background-repeat:repeat-x; background-position:0px 0px;}
+.focus9b{background-image:url('../image/focus/yellow09.png');background-repeat:no-repeat;width:7px;height:7px;}
+
+
+
+
+/* 低智商Focus相关 UT盒子专用 */
+/*
+.stupid_focus1{background-image:url('../image/focus/1.png');background-repeat:no-repeat;width:7px;height:7px;}
+.stupid_focus2{background-image:url('../image/focus/2.png');background-repeat:repeat-x;}
+.stupid_focus3{background-image:url('../image/focus/3.png');background-repeat:no-repeat;width:7px;height:7px;}
+.stupid_focus4{background-image:url('../image/focus/4.png');background-repeat:repeat-y;}
+.stupid_focus5{}
+.stupid_focus6{background-image:url('../image/focus/6.png');background-repeat:repeat-y;}
+.stupid_focus7{background-image:url('../image/focus/7.png');background-repeat:no-repeat;width:7px;height:7px;}
+.stupid_focus8{background-image:url('../image/focus/8.png');background-repeat:repeat-x;}
+.stupid_focus9{background-image:url('../image/focus/9.png');background-repeat:no-repeat;width:7px;height:7px;}
+.stupid_focus_table{position:absolute;border:0px solid #000000;width:100%;height:100%;}
+#stupid_focus_container{position:absolute;top:0px;left:0px;z-index:999;visibility:hidden;width:100%;height:100%;}
+*/
+
+.ut_focus {border:solid 2px #ffdd3e !important}
+
+/*a.ut_link{opacity:0;position:absolute;left:0px;top:0px;float:left;width:100%;height:100%;background-color:#00AC00;} 
+
+div.link_content{ position:absolute;left:0px;top:0px;width:100%;height:100%;}
+*/
+
+
+/*.page_title {position: absolute; left:80px;top:45px;width:300px;height:40px; font-size:28px; }*/
+.page_title { position: absolute;left:76px; opacity:0.4; top:60px; width:300px;height:30px;font-size:22px;}
+
+.page_mask {position:absolute; display:none; left:0px;top:0px; z-index:10; width:1280px;height:720px; background-image:url('../image/000000_2x2a70.png');}
+
+/*jsrender相关*/
+.jsrender_template { display: none; }

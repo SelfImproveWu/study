@@ -1,0 +1,53 @@
+/**
+ * 
+ */
+package entity;
+
+/**
+ * @author wuzq
+ * 修理单
+ */
+public class RepairSheet {
+	public int id;
+	/**
+	 * 修理单编号
+	 */
+	public String strRepairNo;
+	/**
+	 * 日期
+	 */
+	public String repairDate;
+	/**
+	 * 客户编号
+	 */
+	public int user_id;
+	/**
+	 * 车辆编号
+	 */	
+	public int vehicle_id;
+	/**
+	 * 行车里程
+	 */
+	public int drivingDistance;
+	/**
+	 * 油量
+	 */
+	public int tankNum;
+	/**
+	 * 总价
+	 */
+	public float totalPrice;
+	/**
+	 * 项目总数
+	 */
+	public int iteamsNum;
+	/**
+	 * 配件总数
+	 */
+	public int fittingNum;
+	/**
+	 *状态 0 提交未确定认-1不可编辑已锁死 1不可编辑已被确认
+	 */
+	public int status;
+	
+}

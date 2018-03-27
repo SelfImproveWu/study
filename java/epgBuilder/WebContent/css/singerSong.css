@@ -1,0 +1,232 @@
+body {
+    background: url("../image/singerSong/singer_song_bg.jpg") no-repeat;
+    height: 720px;
+    width: 1280px;
+    overflow: hidden;
+}
+
+/*滚动图片样式*/
+.scroll_0 {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+/*标题样式*/
+.word_white_30 {
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
+.content_list {
+    position: absolute;
+    left: 478px;
+    top: 110px;
+    width: 700px;
+    height: 600px;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.head_title {
+    position: absolute;
+    left: 40px;
+    top: 65px;
+}
+
+/*二级标题样式*/
+.secend_title {
+    position: absolute;
+    left: 200px;
+    top: 65px;
+}
+
+.content_list {
+    position: absolute;
+    width: 705px;
+    top: 130px;
+    left: 490px;
+}
+
+#pageBar {
+    width: 3px;
+    height: 530px;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 1230px;
+    top: 150px;
+}
+
+#pageBarItem {
+    width: 3px;
+    background-color: #4D71D7;
+    position: absolute;
+    left: 1230px;
+    top: 150px;
+    height: 20px;
+}
+
+.back_to_index {
+    position: absolute;
+    left: 1120px;
+    top: 20px;
+    width: 160px;
+    height: 46px;
+}
+
+.singer_img {
+    position: absolute;
+    left: 85px;
+    top: 224px;
+    width: 249px;
+    height: 272px;
+    border-radius: 10px;
+}
+.song_name {
+    position: absolute;
+    left: 65px;
+    top: 2px;
+    width: 375px;
+    height: 25px;
+    line-height: 30px;
+    /*text-shadow: 0 3px 0 rgba(198,133,146,1);*/
+    font-size: 22px;
+    overflow: hidden;
+}
+.content_focus{
+    background-color: rgba(236,107,0,1) !important;
+    opacity: 1 !important;
+}
+.name_containt {
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}
+
+.add_fav {
+    position: absolute;
+    left: 650px;
+    width: 54px;
+    height: 37px;
+
+}
+.not_fav{
+    background-image: url("../image/tagSong/not_fav.png");
+}
+.not_fav_f{
+    background-image: url(../image/tagSong/not_fav_f.png);
+}
+.be_fav{
+    background-image: url(../image/tagSong/be_fav_f.png);
+}
+.add_song {
+    position: absolute;
+    left: 570px;
+    width: 54px;
+    height: 37px;
+}
+.not_add_f{
+    background-image: url(../image/tagSong/not_add_f.png);
+}
+.not_add{
+    background-image: url(../image/tagSong/not_add.png);
+}
+.be_add{
+    background-image: url(../image/tagSong/be_add_f.png);
+}
+
+.content_list {
+    position: absolute;
+    left: 478px;
+    top: 110px;
+    width: 700px;
+    height: 600px;
+    color: #ffffff;
+}
+
+.content_song {
+    padding: 5px 10px;
+    width: 420px;
+    height: 25px;
+    line-height: 25px;
+    position: absolute;
+    left: 0;
+    opacity: 0.6;
+}
+.list_title{
+    position: absolute;
+    left: 472px;
+    top:76px;
+    width: 500px;
+    height: 26px;
+    font-size: 24px;
+    line-height: 26px;
+    color: rgba(255,255,255,0.5);
+}
+.page_num{
+    position: absolute;
+    left: 1130px;
+    top: 85px;
+    height: 26px;
+    width: 100px;
+    font-size: 24px;
+    line-height: 26px;
+    color: rgba(255,255,255,0.7);
+}
+.current_page_bar{
+    position: absolute;
+    left: 1208px;
+    top:153px;
+    width: 2px;
+    height: 471px;
+    background: -webkit-linear-gradient(red, rgba(132,0,255,1)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(red, rgba(132,0,255,1)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(red, rgba(132,0,255,1)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(red, rgba(132,0,255,1)); /* 标准的语法 */
+}
+.page_point{
+    position:absolute;
+    left: 1205px;
+    width: 8px;
+    height: 16px;
+    background: rgba(237,106,0,1);
+}
+.page_point_f{
+    position: absolute;
+    left: 1192px;
+    width: 34px;
+    height: 42px;
+    background: url(../image/tagSong/page_point_f.png) no-repeat;
+}
+.page_tip{
+    position: absolute;
+    left: 1223px;
+    top:354px;
+    width: 17px;
+    height: 98px;
+    background: url("../image/tagSong/page_tip.png") no-repeat;
+    opacity: 0.5;
+
+}
+.page_tip_current{
+    position: absolute;
+    left: -2px;
+    top:65px;
+    height: 18px;
+    width: 24px;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color:#f19149;
+}

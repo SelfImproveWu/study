@@ -1,0 +1,22 @@
+/**
+ * 网厅4.0 合约期 查询
+ */
+var contractPeriod = {
+
+	init : function() {
+		QueryMain.loadData("/contractPeriodQuery", null,
+				"contractPeriod.successQuery(data)");
+	},
+	successQuery : function(data) {
+		if (data && data.result && data.result.activityInfo) {
+			$("#contractPeriod").empty().setTemplateElement(
+					"contractPeriodtemplete").processTemplate(data);
+		}else{
+			if(data.errorMessage && data.errorMessage.errCode == "2107000085"){
+				$("#contractErrorPeriod").html("温馨提示 ："+data.errorMessage.errMessage);
+			}else{
+				$("#contractErrorPeriod").html("温馨提示 ："+data.errorMessage.errMessage);
+			}
+		}
+	}
+}

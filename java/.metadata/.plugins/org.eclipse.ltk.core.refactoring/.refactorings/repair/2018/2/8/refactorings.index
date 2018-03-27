@@ -1,0 +1,6 @@
+1518925159929	Rename field 'passWord'
+1518925432096	Rename field 'dress'
+1518925449670	Rename method 'getDress'
+1518925463260	Rename method 'setDress'
+1518925551994	Rename field 'adress'
+1518936014123	Encapsulate field 'name'

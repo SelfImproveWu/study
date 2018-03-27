@@ -1,0 +1,124 @@
+/**
+ * 
+ */
+package controller;
+
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+/*import com.alibaba.fastjson.JSONArray;*/
+
+import entity.Vehicle;
+import service.VehicleService;
+import util.StringUtil;
+
+/**
+ * @author wuzq
+ *
+ */
+@Controller
+@RequestMapping("/vehicle")
+public class VehicleController {
+	@RequestMapping("/vehicle")
+	public ModelAndView showVehicle(HttpServletRequest request){
+		ModelAndView mdv = new ModelAndView();
+		try{
+			String userId = StringUtil.getString(request.getParameter("userId"));
+			mdv.setViewName("vehicle");
+			mdv.addObject("userId", userId);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return mdv;
+	}
+	
+	@RequestMapping("/listByUserId")
+	public @ResponseBody  String getListByUserId(HttpServletRequest request){  
+		ArrayList<Vehicle> vehicleList = new ArrayList<Vehicle>();
+		try{
+			String userId = StringUtil.getString(request.getParameter("userId"));
+			VehicleService vs = new VehicleService();
+			vehicleList = vs.getVehicleListByUserId(userId);			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "";
+	}
+	@RequestMapping(value="/addVehicle",method=RequestMethod.POST)
+	public @ResponseBody String addVehicle(HttpServletRequest request){
+		//ModelAndView mdv = new ModelAndView();
+		String result ="success";
+		try{
+			String userId = StringUtil.getString(request.getParameter("userId"));
+			String name = StringUtil.getString(request.getParameter("name"));
+			String mark=StringUtil.getString(request.getParameter("mark"));
+			String chassis=StringUtil.getString(request.getParameter("chassis"));
+			String insuranceCompanyName = StringUtil.getString(request.getParameter("insuranceCompanyName"));
+			String vehicleTypeName = StringUtil.getString(request.getParameter("vehicleTyepName"));
+			Vehicle vehicle = new Vehicle();
+			vehicle.setUserId(Integer.parseInt(userId));
+			vehicle.setMark(mark);
+			vehicle.setChassisNo(chassis);
+			vehicle.setInsuranceCompanyName(insuranceCompanyName);
+			vehicle.setName(name);
+			vehicle.setVehicleTypeName(vehicleTypeName);
+		
+			VehicleService vs = new VehicleService();
+			result = vs.addVehicle(vehicle);
+			//mdv.addObject("result", result);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@RequestMapping("/updateVehicle")
+	public ModelAndView update(HttpServletRequest request){
+		ModelAndView mdv = new ModelAndView();
+		try{
+			String vehicleId = StringUtil.getString(request.getParameter("vehicleId"));
+			String userId = StringUtil.getString(request.getParameter("userId"));
+			String name = StringUtil.getString(request.getParameter("name"));
+			String mark=StringUtil.getString(request.getParameter("mark"));
+			String chassis=StringUtil.getString(request.getParameter("chassis"));
+			String insuranceCompanyName = StringUtil.getString(request.getParameter("insuranceCompanyName"));
+			String vehicleTyepName = StringUtil.getString(request.getParameter("vehicleTyepName"));
+			Vehicle vehicle = new Vehicle();
+			vehicle.setUserId(Integer.parseInt(userId));
+			vehicle.setMark(mark);
+			vehicle.setChassisNo(chassis);
+			vehicle.setInsuranceCompanyName(insuranceCompanyName);
+			vehicle.setName(name);
+			vehicle.setName(vehicleTyepName);
+			vehicle.setId(Integer.parseInt(vehicleId));
+			VehicleService vs = new VehicleService();
+			String result = vs.update(vehicle);
+			mdv.addObject("result", result);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return mdv;
+	}
+	@RequestMapping("/delete")
+	public ModelAndView delete(HttpServletRequest request){
+		ModelAndView mdv = new ModelAndView();
+		try{
+			String vehicleId = StringUtil.getString(request.getParameter("vehicleId"));
+			
+			VehicleService vs = new VehicleService();
+			String result = vs.delete(Integer.parseInt(vehicleId));
+			mdv.addObject("result", result);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return mdv;
+	}
+	
+}

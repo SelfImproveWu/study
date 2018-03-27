@@ -1,0 +1,16 @@
+.preview{
+    position: absolute;
+    left: 50px;
+    top: 40px;
+    border: solid 1px #EEEEEE;
+    width: 1000px;
+    height: 720px;
+}
+.plugins_area{
+    position: absolute;
+    left: 1150px;
+    top: 40px;
+    width: 570px;
+    height: 1000px;
+    border: solid 1px red;
+}

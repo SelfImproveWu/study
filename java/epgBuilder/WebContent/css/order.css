@@ -1,0 +1,64 @@
+body{
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+}
+.order_button{
+    position: absolute;
+}
+.order_cell{
+    position: absolute;
+}
+.focus_on{
+    color: #FDFF00;;
+}
+.focus_off{
+    color: #FFFFFF;
+}
+.back{
+    position: absolute;
+    left: 1209px;
+    top: 19px;
+    width: 42px;
+    height: 42px;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+.order_stay{
+    position: absolute;
+    width: 1280px;
+    height: 720px;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    background: url('../image/orderStay/background_wanliu.png');
+}
+
+.order_continue{
+     width: 220px;
+     height: 102px;
+     position: absolute;
+     top: 350px;
+     left: 420px;
+ }
+.continue_focus_on {
+    background: url('../image/orderStay/juxufufei_f.png');
+}
+.continue_focus_off {
+    background: url('../image/orderStay/juxufufei.png');
+}
+.order_refuse {
+    width: 220px;
+    height: 102px;
+    position: absolute;
+    top: 350px;
+    left: 650px;
+}
+.refuse_focus_on {
+    background: url('../image/orderStay/jianquan_out_f.png');
+}
+.refuse_focus_off {
+    background: url('../image/orderStay/jianquan_out.png');
+}

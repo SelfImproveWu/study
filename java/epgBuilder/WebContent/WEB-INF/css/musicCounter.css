@@ -1,0 +1,716 @@
+
+body {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    background-image: url(../image/musicCounter/music_counter_bg.jpg);
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/*首字母*/
+.search_initial {
+    top: 85px;
+    left: 50px;
+    width: 115px;
+    height: 36px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 8px;
+
+}
+
+/*男明星*/
+.male_star {
+    top: 85px;
+    left: 175px;
+    width: 115px;
+    height: 36px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 8px;
+}
+
+/*女明星*/
+.female_star {
+    top: 85px;
+    left: 310px;
+    width: 115px;
+    height: 36px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 8px;
+
+}
+
+/*乐队*/
+.band {
+    top: 85px;
+    left: 430px;
+    width: 115px;
+    height: 36px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 8px;
+
+}
+.left_content{
+    position: absolute;
+    left: 75px;
+    top:150px;
+    width: 500px;
+    height: 550px;
+}
+.content_keyboard {
+    width: 500px;
+    height: 550px;
+    top: 150px;
+    left: 50px;
+    display: block;
+}
+
+.sizeofkey {
+    width: 60px;
+    height: 48px;
+    font-size: 24px;
+    color: #ffFFFF;
+    text-align: center;
+    line-height: 48px;
+    font-family: "Microsoft YaHei" ! important;
+    background: url(../image/musicCounter/key_bg.png) no-repeat;
+}
+.on_focus_key{
+    background:rgba(237,106,0,1);
+}
+.back_search_top {
+    position: absolute;
+    top: 0;
+    left: 335px;
+    width: 127px;
+    height: 58px;
+}
+
+.key_a {
+    top: 0;
+    left: 0;
+}
+
+.key_b {
+    top: 0;
+    left: 67px;
+}
+
+.key_c {
+    top: 0;
+    left: 134px;
+}
+
+.key_d {
+    top: 0;
+    left: 201px;
+}
+
+.key_e {
+    top: 0;
+    left: 268px;
+}
+
+.key_f {
+    top: 0;
+    left: 335px;
+}
+
+.key_g {
+    top: 0;
+    left: 402px;
+}
+
+.key_h {
+    top: 53px;
+    left: 0;
+}
+
+.key_i {
+    top: 53px;
+    left: 67px;
+}
+
+.key_j {
+    top: 53px;
+    left: 134px;
+}
+
+.key_k {
+    top: 53px;
+    left: 201px;
+}
+
+.key_l {
+    top: 53px;
+    left: 268px;
+}
+
+.key_m {
+    top: 53px;
+    left: 335px;
+}
+
+.key_n {
+    top: 53px;
+    left: 402px;
+}
+
+.key_o {
+    top: 106px;
+    left: 0;
+}
+
+.key_p {
+    top: 106px;
+    left: 67px;
+}
+
+.key_q {
+    top: 106px;
+    left: 134px;
+}
+
+.key_r {
+    top: 106px;
+    left: 201px;
+}
+
+.key_s {
+    top: 106px;
+    left: 268px;
+}
+
+.key_t {
+    top: 106px;
+    left: 335px;
+}
+
+.key_u {
+    top: 106px;
+    left: 402px;
+}
+
+.key_v {
+    top: 159px;
+    left: 0;
+}
+
+.key_w {
+    top: 159px;
+    left: 67px;
+}
+
+.key_x {
+    top: 159px;
+    left: 134px;
+}
+
+.key_y {
+    top: 159px;
+    left: 201px;
+}
+
+.key_z {
+    top: 159px;
+    left: 268px;
+}
+
+.key_0 {
+    top: 159px;
+    left: 335px;
+}
+
+.key_1 {
+    top: 159px;
+    left: 402px;
+}
+
+.key_2 {
+    top: 212px;
+    left: 0;
+}
+
+.key_3 {
+    top: 212px;
+    left: 67px;
+}
+
+.key_4 {
+    top: 212px;
+    left: 134px;
+}
+
+.key_5 {
+    top: 212px;
+    left: 201px;
+}
+
+.key_6 {
+    top: 212px;
+    left: 268px;
+}
+
+.key_7 {
+    top: 212px;
+    left: 335px;
+}
+
+.key_8 {
+    top: 212px;
+    left: 402px;
+}
+
+.key_9 {
+    top: 265px;
+    left: 0;
+}
+
+.key_back {
+    position: absolute;
+    top: 265px;
+    left: 67px;
+}
+.key_back_f {
+    top: 265px;
+    left: 67px;
+}
+.key_clear {
+    position: absolute;
+    top: 265px;
+    left: 201px;
+}
+.key_clear_f{
+    top: 265px;
+    left: 201px;
+}
+
+.searchBox {
+    background: url("../image/common/searchText.png") no-repeat;
+    width: 300px;
+    height: 58px;
+    left: 0;
+    color: #FFFFFF;
+    font-size: 30px;
+    padding-left: 30px;
+    line-height: 60px
+}
+
+.sizeback {
+    width: 126px;
+    height: 48px;
+}
+
+#keybox {
+    position: relative;
+    top: 100px;
+}
+
+div {
+    position: absolute;
+}
+
+.size {
+    width: 86px;
+    height: 54px;
+}
+
+.size1 {
+    width: 140px;
+    height: 53px;
+}
+
+.singer_box {
+    position: relative;
+    float: left;
+    margin-bottom: 20px;
+    margin-right: 23px;
+    width: 127px;
+    height: 139px;
+}
+
+.singer1 {
+    top: 0;
+    left: 0px;
+}
+
+.singer2 {
+    top: 0;
+    left: 148px;
+}
+
+.singer3 {
+    top: 0;
+    left: 296px;
+}
+
+.singer4 {
+    top: 0;
+    left: 456px;
+}
+
+.singer5 {
+    top: 180px;
+    left: 0px;
+}
+
+.singer6 {
+    top: 180px;
+    left: 148px;
+}
+
+.singer7 {
+    top: 180px;
+    left: 296px;
+}
+
+.singer8 {
+    top: 180px;
+    left: 456px;
+}
+
+.singer9 {
+    top: 360px;
+    left: 0px;
+}
+
+.singer10 {
+    top: 360px;
+    left: 148px;
+}
+
+.singer11 {
+    top: 360px;
+    left: 296px;
+}
+
+.singer12 {
+    top: 360px;
+    left: 456px;
+}
+
+.singer_name {
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    top:106px;
+    left: 0;
+    width: 97px;
+    height: 33px;
+    line-height: 34px;
+    color: #FFFFFF;
+    overflow: hidden;
+    font-size: 24px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 0 0 4px 4px;
+}
+.singer_img{
+    width:127px;
+    height:139px;
+    border-radius: 4px;
+}
+.content_result {
+    position: absolute;
+    top: 130px;
+    width: 620px;
+    height: 600px;
+    left: 600px;
+    color: #FFFFFF;
+    font-size: 22px;
+}
+
+#song_0 {
+    top: 0;
+    width: 620px;
+    height: 50px;
+    line-height: 50px;
+}
+
+#song_1 {
+    top: 50px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_2 {
+    top: 100px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_3 {
+    top: 150px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_4 {
+    top: 200px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_5 {
+    top: 250px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_6 {
+    top: 300px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_7 {
+    top: 350px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_8 {
+    top: 400px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_9 {
+    top: 450px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+#song_10 {
+    top: 500px;
+    width: 620px;
+    height: 60px;
+    line-height: 50px;
+}
+
+.song_name {
+    left: 45px;
+    width: 350px;
+    overflow: hidden;
+}
+
+.addSong {
+    width: 54px;
+    height: 37px;
+    right: 84px;
+    top: 10px
+}
+
+.favSong {
+    width: 54px;
+    height: 37px;
+    right: 20px;
+    top: 10px;
+}
+
+#num_3 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_4 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_5 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_6 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_7 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_8 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_9 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+#num_10 {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+
+.size_of_singger {
+    position: relative;
+    left: 600px;
+    top: 140px;
+}
+
+.navigator_focus_on {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(237, 106, 0, 1);
+}
+
+.navigator_focus_off {
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(174,93,71,1);
+}
+
+.navigator_default {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: transparent;
+}
+
+/*返回首页*/
+.back_to_index {
+    position: absolute;
+    left: 1120px;
+    top: 20px;
+    width: 160px;
+    height: 46px;
+    background-image: url(../image/common/back_to_index.png);
+}
+
+.title_right {
+    width: 620px;
+    height: 60px;
+    line-height: 60px;
+    color: #ffffff;
+    font-size: 25px;
+    opacity: 0.7;
+    position: absolute;
+    left: 600px;
+    top: 60px;
+}
+
+.page_num {
+    position: absolute;
+    font-size: 25px;
+    color: #FFFFFF;
+    opacity: 0.7;
+    position: absolute;
+    left: 1170px;
+    top: 75px;
+}
+
+.not_fav{
+    background-image: url("../image/tagSong/not_fav.png");
+}
+.not_fav_f{
+    background-image: url(../image/tagSong/not_fav_f.png);
+}
+.be_fav{
+    background-image: url(../image/tagSong/be_fav_f.png);
+}
+.not_add_f{
+    background-image: url(../image/tagSong/not_add_f.png);
+}
+.not_add{
+    background-image: url(../image/tagSong/not_add.png);
+}
+.be_add{
+    background-image: url(../image/tagSong/be_add_f.png);
+}
+
+.current_page_bar{
+    position: absolute;
+    left: 1226px;
+    top:157px;
+    width: 2px;
+    height: 449px;
+    background: -webkit-linear-gradient(red, rgba(132,0,255,1)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(red, rgba(132,0,255,1)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(red, rgba(132,0,255,1)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(red, rgba(132,0,255,1)); /* 标准的语法 */
+}
+.page_point{
+    position:absolute;
+    left: 1223px;
+    width: 8px;
+    height: 16px;
+    z-index: 5;
+    background: rgba(237,106,0,1);
+}
+.page_point_f{
+    position: absolute;
+    left: 1210px;
+    width: 34px;
+    height: 42px;
+    background: url(../image/tagSong/page_point_f.png) no-repeat;
+}
+.page_tip{
+    position: absolute;
+    left: 1244px;
+    top:354px;
+    width: 17px;
+    height: 98px;
+    background: url("../image/tagSong/page_tip.png") no-repeat;
+    opacity: 0.5;
+
+}
+.page_tip_current{
+    position: absolute;
+    left: 0px;
+    top:65px;
+    height: 18px;
+    width: 16px;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: rgb(218, 97, 0);
+}
+.name_containt {
+    position: relative;
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}
+.song_num{
+    position: absolute;
+    z-index: 30;
+}

@@ -1,0 +1,310 @@
+var imagePath = undefined;
+var imageLoadFlag = undefined;
+var sureFlag = true;
+var checkImgSize = undefined;
+var testImage = undefined;
+function saveReportBefore () {
+	var options = {
+		async: false,
+	    success:function(message){
+			$.ajax({
+				type: "POST",
+				async:false,
+				url: E3CommonsVariables.RequestPrefixQuery() + "/getTempFileOfImage/",
+				success: function(msg){
+					if (msg.indexOf("只允许上传5M之内的图片") != -1) {
+		    			checkImgSize = msg;
+		    			handleFunToUser();
+		    		} else if (msg.indexOf("testMessageFlag_") != -1) {
+		    			var newMsg = (msg.split("_"))[1];
+		    			testImage = newMsg;
+		    			handleFunToUser();
+		    		} else {
+		    			imagePath = "http://iservice.10010.com/e3/static/" + msg;
+		    			
+		    			var explorer = window.navigator.userAgent;
+			    		//ie
+			    		if (explorer.indexOf("MSIE") >= 0) {
+			    			//document.getElementById("sureUpload").disabled=true; 
+			    			setTimeout(function () {
+			    				handleFunToUser();
+			    			}, 1000);
+			    		} else {
+			    			handleFunToUser();
+			    		}
+		    		}
+				}
+			});
+	    },
+	    error: function(XmlHttpRequest, textStatus, errorThrown){   
+       	 $("#fileMsg").hide();
+         alert("您选择的图片不符合规则,并且文件过于庞大,造成系统出现异常,请刷新页面且重新选择上传图片..."); 
+         window.location.href=window.location.href;
+     } 
+	};
+	// 表单提交
+	$("#uploadToLocal").ajaxSubmit(options);
+	// 返回false，否则表单会自己再做一次提交操作，并且页面跳转
+	return false; 
+}
+
+function saveReportAfter () {
+	$("#uploadToTYRZ").ajaxSubmit({
+         success: function(message){  
+        	 $.ajax({
+ 				type: "POST",
+ 				async:false,
+ 				url: E3CommonsVariables.RequestPrefixQuery() + "/getReturnUploadData/",
+ 				success: function(msg){
+ 					var data;
+ 	     			try {
+ 	     				data = $.parseJSON(msg);
+ 	     			} catch(e) {
+ 	     				data = msg;
+ 	     			}
+ 	     			if(data.rsp_code == "0000"){
+ 	     				window.location.href=window.location.href;
+ 	     				parent.location.reload();
+ 	     				$("#center_loadingBg").hide();
+ 	     				$("#center_loadingGif").hide();
+ 	     			} else {
+ 	     				$("#txsc_pop").hide();
+ 	     	       		_BaseTools.setErrorMessage(data.rsp_code, data);
+ 	     	       		_BaseTools.showid('wrongTc');
+ 	     			}
+ 				}
+ 			});
+         }/*,  
+         error: function(XmlHttpRequest, textStatus, errorThrown){ 
+        	 $("#fileMsg").hide();
+             alert("您上传的图片不符合规则或系统出现异常,请重新选择上传图片..."); 
+             window.location.href=window.location.href;
+         }  */
+	});
+	// 返回false，否则表单会自己再做一次提交操作，并且页面跳转
+	return false; 
+}
+
+//选择图片后的触发事件
+function choiceFile11 (input) {
+	//校验用户上传的文件格式   start
+	var imgFile = $("#choiceFile").val();
+	var imgSufName = imgFile.substring(imgFile.lastIndexOf("."),imgFile.length).toLowerCase();
+	var specifyName = ".jpg,.jpeg,.gif,.png,.bmp";
+	if (specifyName.indexOf(imgSufName) == -1) {
+		//清除用户选择的图片
+		clearFile();
+		//展示错误信息
+		$("#fileMsg").attr("style","display:none;color:red;font-size: 20px; margin:345px 0px 0px 35px;");
+		$("#fileMsg").html("只允许上传JPG、PNG、GIF、JPEG、BMP格式的图片").show();
+		return false;
+	} 
+	//校验用户上传的文件格式   end
+	else {
+		var imgSize = $("#choiceFile").get(0).files[0].size;
+		if(imgSize>5*1024 * 1024){
+			$("#fileMsg").attr("style","display:none;color:red;font-size: 20px; margin:345px 0px 0px 175px;");
+			$("#fileMsg").html("只允许上传5M之内的图片").show();
+			return false;
+		}else{
+			//存放临时图片到服务器    start
+			$("#fileMsg").hide();
+			document.getElementById("sureUpload").disabled=true; 
+			$("#uploadToLocal").attr("action",E3CommonsVariables.RequestPrefixQuery() + "/uploadToLocal/");
+			$("#uploadToLocal").submit();
+			//存放临时图片到服务器    end
+		}
+	}
+}
+
+//当图片加载完触发此事件       说明：当用户选择完图片后，图片会存放到服务器指定目录，随后将图片展示给页面，供用户裁剪
+function loadAfter (img) {
+	
+	$("#crop_preview").attr("src",imagePath);
+	$("#crop_preview1").attr("src",imagePath);
+	$("#crop_preview2").attr("src",imagePath);
+	$("#choiceBefore").hide();
+	$("#choiceAfter").show();
+    
+    var ctt_h=$("#xuwanting").height();
+   	var ctt_w=$("#xuwanting").width();
+	if ((ctt_w > ctt_h)  && (ctt_w > 355)){
+		$("#xuwanting").css({"width":"355px","height":"auto"});
+	} else if ((ctt_h > ctt_w) && (ctt_h > 355)) {
+		$("#xuwanting").css({"height":"355px","width":"auto"});
+	} else if ((ctt_h == ctt_w) && (ctt_h > 355)) {
+		$("#xuwanting").css({"height":"355px","width":"auto"});
+	}
+	jcrop1();
+	document.getElementById("sureUpload").disabled=false;
+}
+
+//头像上传插件初始化
+function jcrop1(){
+	$("#xuwanting").Jcrop({
+		setSelect: [130,63,274,207],
+		sideHandles:true,
+		onChange:showPreview,
+		onSelect:showPreview,
+		aspectRatio:1
+	});	
+	//简单的事件处理程序，响应自onChange,onSelect事件，按照上面的Jcrop调用
+	function showPreview(coords){
+		$("#x1").val(coords.x);
+		$("#y1").val(coords.y);
+		$("#x2").val(coords.x2);
+		$("#y2").val(coords.y2);
+		$("#w").val(coords.w);
+		$("#h").val(coords.h);
+		if(parseInt(coords.w) > 0){
+			//计算预览区域图片缩放的比例，通过计算显示区域的宽度(与高度)与剪裁的宽度(与高度)之比得到
+			var rx = $("#preview_box").width() / coords.w; 
+			var ry = $("#preview_box").height() / coords.h;
+			//通过比例值控制图片的样式与显示
+			$("#crop_preview").css({
+				width:Math.round(rx * $("#xuwanting").width()) + "px",	//预览图片宽度为计算比例值与原图片宽度的乘积
+				height:Math.round(rx * $("#xuwanting").height()) + "px",	//预览图片高度为计算比例值与原图片高度的乘积
+				marginLeft:"-" + Math.round(rx * coords.x) + "px",
+				marginTop:"-" + Math.round(ry * coords.y) + "px"
+			});
+			$("#crop_preview1").css({
+				width:Math.round(rx * $("#xuwanting").width()*0.75) + "px",	//预览图片宽度为计算比例值与原图片宽度的乘积
+				height:Math.round(rx * $("#xuwanting").height()*0.75) + "px",	//预览图片高度为计算比例值与原图片高度的乘积
+				marginLeft:"-" + Math.round(rx * coords.x*0.75) + "px",
+				marginTop:"-" + Math.round(ry * coords.y*0.75) + "px"
+			});
+			$("#crop_preview2").css({
+				width:Math.round(rx * $("#xuwanting").width()*0.5) + "px",	//预览图片宽度为计算比例值与原图片宽度的乘积
+				height:Math.round(rx * $("#xuwanting").height()*0.5) + "px",	//预览图片高度为计算比例值与原图片高度的乘积
+				marginLeft:"-" + Math.round(rx * coords.x*0.5) + "px",
+				marginTop:"-" + Math.round(ry * coords.y*0.5) + "px"
+			});
+		}
+	}
+}
+
+//编辑头像
+function editFun(){
+	_BaseTools.showid('txsc_pop');
+	document.getElementById("sureUpload").disabled=false;
+	$("#choiceBefore").show();
+	$("#choiceAfter").hide();
+}
+
+//头像上传
+function sureFun () {
+	if (getImg()) {
+		if (sureFlag) {
+			sureFlag = false;
+			document.getElementById("sureUpload").disabled=false;
+			document.getElementById("cancelBtn").disabled=false;
+			$("#fileMsg").attr("style","display:none;color:red;font-size: 20px; margin:-90px 0px 0px 200px;");
+			$("#fileMsg").html("头像正在上传中...").show();
+			$("#sureUpload").removeClass().addClass('off_btn').css("margin-right","20px");
+			$("#cancelBtn").removeClass('closeTransact');
+			$("#closebtnbya").removeClass('closeTransact');
+			$("#center_loadingBg").show();
+			$("#center_loadingGif").show();
+			var inputFile = $("#uploadToLocal").find("input");
+			var parentDiv=$('<div></div>');       
+			parentDiv.attr("style","display:none;");
+			parentDiv.append(inputFile);
+			$("#uploadToTYRZ").append(parentDiv);
+			var newHeight=$("#xuwanting").height();
+		   	var newWidth=$("#xuwanting").width();
+		   	$("#width").val(newWidth);
+			$("#height").val(newHeight);
+			$("#uploadToTYRZ").attr("action",E3CommonsVariables.RequestPrefixQuery() + "/udPic/");
+			$("#uploadToTYRZ").submit();
+		} else {
+			return;
+		}
+	} else {
+		$("#fileMsg").attr("style","display:none;color:red;font-size: 20px; margin:345px 0px 0px 200px;");
+		$("#fileMsg").html("请先选择图片...").show();
+	}
+}
+
+//删除本地存放的临时文件
+function deleteLocalTempImage () {
+	$("#choiceBefore").show();
+	$("#choiceAfter").hide();
+	$("#fileMsg").hide();
+	//清除用户选择的图片
+	clearFile();
+	//删除服务器临时文件
+	if (imagePath && imagePath.indexOf("tempFileOfImage_") != -1) {
+		$.ajax({
+			type: "POST",
+			url: E3CommonsVariables.RequestPrefixQuery() + "/deleteLocalTempImage/",
+			success: function(msg){
+				imagePath = undefined;
+			}
+		});
+	}
+	parent.switch_modal('avatar-editor','profile-modal');
+}
+
+//获取用户选择的图片
+function getImg () {
+   	 if ($("#choiceFile").val() == "" || $("#choiceFile").val() == null || $("#choiceFile").val() == undefined) {
+   		 return false;
+   	 } else {
+   		 return true;
+   	 }
+}
+
+//清除用户选择的图片
+function clearFile () {
+	var explorer = window.navigator.userAgent;
+	//ie
+	if (explorer.indexOf("MSIE") >= 0) {
+		var file = $("#choiceFile"); 
+		file.after(file.clone().val("")); 
+		file.remove();
+	} 
+	//ie 11
+	else if (explorer.match(/Trident/) && explorer.match(/rv:11.0/)) {
+		var file = $("#choiceFile");
+		file.after(file.clone().val("")); 
+		file.remove();
+	} else {
+		$("#choiceFile").val("");
+	}
+}
+
+function handleFunToUser () {
+	$("#fileMsg").hide();
+	if (checkImgSize) {
+		clearFile();
+		$("#fileMsg").attr("style","display:none;color:red;font-size: 20px; margin:345px 0px 0px 100px;");
+		$("#fileMsg").html(checkImgSize).show();
+		document.getElementById("sureUpload").disabled=false;
+		checkImgSize = undefined;
+		return false;
+	} else if (testImage) {
+		clearFile();
+		$("#fileMsg").attr("style","display:none;color:red;font-size: 20px; margin:285px auto 0px;font-size: 20px;width: 80%;line-height: 35px;");
+		$("#fileMsg").html(testImage).show();
+		document.getElementById("sureUpload").disabled=false;
+		testImage = undefined;
+		return false;
+	} else { //校验文件大小    end
+		// 图片地址
+		var img_url = imagePath;
+		// 创建对象
+		var img = new Image();
+		// 改变图片的src
+		img.src = img_url;
+		// 定时执行获取宽高
+		var check = function(){
+			// 只要任何一方大于0
+			// 表示已经服务器已经返回宽高
+			if (img.width > 0 || img.height > 0){
+				$("#xu_img").html("<img onload=\"loadAfter(this)\" id=\"xuwanting\" src=\""+img.src+"\"  />");
+				clearInterval(set);
+			} 
+		};
+		var set = setInterval(check,10);
+	}
+}

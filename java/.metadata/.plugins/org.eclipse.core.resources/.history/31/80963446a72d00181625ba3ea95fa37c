@@ -1,0 +1,159 @@
+/**
+ * 
+ */
+package entity;
+
+/**
+ * @author wuzq
+ *
+ */
+public class Vehicle {
+	/**
+	 * 主键 ID
+	 */
+	public int id;
+	/**
+	 * 用户名称
+	 */
+	public int user_id;
+	/**
+	 * 车辆名称
+	 */
+	public String name;
+	/**
+	 * 底盘号
+	 */
+	public String chassisNo;
+	/**
+	 * 保险公司id
+	 */
+	public int insuranceCompany_id;
+	/**
+	 * 保险公司名称
+	 */
+	public String insuranceCompany_name;
+	/**
+	 * 车型
+	 * 
+	 */
+	public int vehicleType_id;
+	/**
+	 * 车型名称
+	 * 
+	 */
+	public String vehicleType_name;
+	/**
+	 * 车牌号
+	 */
+	public String mark;
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the chassisNo
+	 */
+	public String getChassisNo() {
+		return chassisNo;
+	}
+	/**
+	 * @param chassisNo the chassisNo to set
+	 */
+	public void setChassisNo(String chassisNo) {
+		this.chassisNo = chassisNo;
+	}
+	/**
+	 * @return the iInsuranceCompanyId
+	 */
+	public int getiInsuranceCompanyId() {
+		return iInsuranceCompanyId;
+	}
+	/**
+	 * @param iInsuranceCompanyId the iInsuranceCompanyId to set
+	 */
+	public void setiInsuranceCompanyId(int iInsuranceCompanyId) {
+		this.iInsuranceCompanyId = iInsuranceCompanyId;
+	}
+	/**
+	 * @return the iInsuranceCompanyName
+	 */
+	public String getInsuranceCompanyName() {
+		return insuranceCompanyName;
+	}
+	/**
+	 * @param insuranceCompanyName the insuranceCompanyName to set
+	 */
+	public void setInsuranceCompanyName(String insuranceCompanyName) {
+		this.insuranceCompanyName = insuranceCompanyName;
+	}
+	/**
+	 * @return the iVehicleType
+	 */
+	public int getiVehicleType() {
+		return iVehicleType;
+	}
+	/**
+	 * @param iVehicleType the iVehicleType to set
+	 */
+	public void setiVehicleType(int iVehicleType) {
+		this.iVehicleType = iVehicleType;
+	}
+	/**
+	 * @return the vehicleTypeName
+	 */
+	public String getVehicleTypeName() {
+		return vehicleTypeName;
+	}
+	/**
+	 * @param vehicleTypeName the vehicleTypeName to set
+	 */
+	public void setVehicleTypeName(String vehicleTypeName) {
+		this.vehicleTypeName = vehicleTypeName;
+	}
+	/**
+	 * @return the mark
+	 */
+	public String getMark() {
+		return mark;
+	}
+	/**
+	 * @param mark the mark to set
+	 */
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
+	
+
+}	

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>车辆信息</title>
+    <link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="themes/icon.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+    <style>
+        .table_li{
+        position: relative;
+        /*float: left;*/
+        left: 0px;
+        width: 500px;
+        height: 50px;
+        }
+        .register_form{
+        position: absolute;
+        left: 200px;
+        top: 50px;
+        width: 600px;
+        border: solid 2px grey;
+        padding: 10px;
+        }
+    </style>
+    <script>
+        function checkAndSubmit(){
+            var flag=true;
+            var notice = '';
+            if($("#mark").val == ''){
+                notice +=' 车牌号 ';
+                flag =false;
+            }
+            if(flag){
+                $("#addVehicle").submit();
+            }else{
+                alert(notice+' 不能为空！');
+            }
+        }
+    </script>
+</head>
+
+<body>
+<table id="dg" title="My Users" style="width:550px;height:250px"
+       url="get_users.php"
+       toolbar="#toolbar"
+       fitColumns="true" singleSelect="true">
+    <thead>
+    <tr>
+        <th field="firstname" width="50">First Name</th>
+        <th field="lastname" width="50">Last Name</th>
+        <th field="phone" width="50">Phone</th>
+        <th field="email" width="50">Email</th>
+    </tr>
+    </thead>
+</table>
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newItem()">New</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyItem()">Destroy</a>
+</div>
+
+</body>
+</html>

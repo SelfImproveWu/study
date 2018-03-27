@@ -1,0 +1,181 @@
+body {
+    background: url("../image/tagSong/tag_bg.jpg") no-repeat;
+    height: 720px;
+    width: 1280px;
+    overflow: hidden;
+}
+
+/*标签页图片海报*/
+.tag_poster {
+    position: absolute;
+    left: 55px;
+    top: 59px;
+    width: 308px;
+    height: 600px;
+}
+
+/*标题样式*/
+.tag_title {
+    position: absolute;
+    color: #FFFFFF;
+    opacity: 0.7;
+    font-size: 24px;
+    left: 477px;
+    top: 76px;
+    line-height: 24px;
+    text-align: left;
+}
+
+/*返回首页*/
+.back_to_index {
+    position: absolute;
+    left: 1120px;
+    top: 20px;
+    width: 160px;
+    height: 46px;
+    background-image: url(../image/common/back_to_index.png);
+}
+
+/*二级标题样式*/
+.secend_title {
+    position: absolute;
+    left: 140px;
+    top: 65px;
+}
+
+.song_name {
+    position: absolute;
+    left: 65px;
+    top: 2px;
+    width: 375px;
+    height: 28px;
+    line-height: 30px;
+    /*text-shadow: 0 3px 0 rgba(198,133,146,1);*/
+    font-size: 22px;
+    overflow: hidden;
+}
+
+.name_containt {
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}
+
+.add_fav {
+    position: absolute;
+    left: 650px;
+    width: 54px;
+    height: 37px;
+
+}
+.not_fav{
+    background-image: url("../image/tagSong/not_fav.png");
+}
+.not_fav_f{
+    background-image: url(../image/tagSong/not_fav_f.png);
+}
+.be_fav{
+    background-image: url(../image/tagSong/be_fav_f.png);
+}
+.add_song {
+    position: absolute;
+    left: 570px;
+    width: 54px;
+    height: 37px;
+}
+.not_add_f{
+    background-image: url(../image/tagSong/not_add_f.png);
+}
+.not_add{
+    background-image: url(../image/tagSong/not_add.png);
+}
+.be_add{
+    background-image: url(../image/tagSong/be_add_f.png);
+}
+
+.content_list {
+    position: absolute;
+    left: 478px;
+    top: 110px;
+    width: 700px;
+    height: 600px;
+    color: #ffffff;
+}
+
+.content_song {
+    padding: 5px 10px;
+    width: 420px;
+    height: 25px;
+    line-height: 25px;
+    position: absolute;
+    left: 0;
+    opacity: 0.6;
+}
+.current_page_bar{
+    position: absolute;
+    left: 1208px;
+    top:153px;
+    width: 2px;
+    height: 471px;
+    background: -webkit-linear-gradient(red, rgba(132,0,255,1)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(red, rgba(132,0,255,1)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(red, rgba(132,0,255,1)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(red, rgba(132,0,255,1)); /* 标准的语法 */
+}
+.page_point{
+    position:absolute;
+    left: 1205px;
+    width: 8px;
+    height: 16px;
+    background: rgba(237,106,0,1);
+}
+.page_point_f{
+    position: absolute;
+    left: 1192px;
+    width: 34px;
+    height: 42px;
+    background: url(../image/tagSong/page_point_f.png) no-repeat;
+}
+.page_tip{
+    position: absolute;
+    left: 1223px;
+    top:354px;
+    width: 17px;
+    height: 98px;
+    background: url("../image/tagSong/page_tip.png") no-repeat;
+    opacity: 0.5;
+
+}
+.page_tip_current{
+    position: absolute;
+    left: -3px;
+    top:65px;
+    height: 18px;
+    width: 24px;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: rgb(255, 95, 0);
+}
+.page_num{
+    position: absolute;
+    left: 1080px;
+    top:80px;
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 25px;
+    color: #ffFFFF;
+    opacity: 0.6;
+}

@@ -1,0 +1,28 @@
+package service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import entity.RepairSheet;
+import util.DAOUtil;
+
+public class RepairSheetService {
+
+	public ArrayList<RepairSheet> listByUserId(String userId) {
+		List<RepairSheet> list = new ArrayList<RepairSheet>();
+		try{
+			String sql = "SELECT * FROM repairsheet WHERE user_id = ?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(userId);
+			DAOUtil dao = new DAOUtil();
+			list = dao.getForList(RepairSheet.class, sql, params.toArray());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		return list;
+	}
+
+}

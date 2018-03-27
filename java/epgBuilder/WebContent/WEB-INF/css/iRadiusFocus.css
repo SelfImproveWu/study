@@ -1,0 +1,55 @@
+.bfocus2 {
+    background-image: url("../image/iRadiusFocus/top.png");
+    background-repeat: repeat-x;
+    background-position: left top
+}
+
+.bfocus4 {
+    background-image: url("../image/iRadiusFocus/left.png");
+    background-repeat: repeat-y;
+    background-position: left top
+}
+
+.bfocus6 {
+    background-image: url("../image/iRadiusFocus/right.png");
+    background-repeat: repeat-y;
+    background-position: right top
+}
+
+.bfocus8 {
+    background-image: url("../image/iRadiusFocus/bottom.png");
+    background-repeat: repeat-x;
+    background-position: left bottom
+}
+
+.bfocus1 {
+    background-image: url("../image/iRadiusFocus/left_top.png");
+    background-repeat: no-repeat !important;
+    width: 16px;
+    height: 16px;
+    background-position: left top
+}
+
+.bfocus3 {
+    background-image: url("../image/iRadiusFocus/right_top.png");
+    background-repeat: no-repeat !important;
+    width: 16px;
+    height: 16px;
+    background-position: right top
+}
+
+.bfocus7 {
+    background-image: url("../image/iRadiusFocus/left_bottom.png");
+    background-repeat: no-repeat !important;
+    width: 16px;
+    height: 16px;
+    background-position: left bottom
+}
+
+.bfocus9 {
+    background-image: url("../image/iRadiusFocus/right_bottom.png");
+    background-repeat: no-repeat !important;
+    width: 16px;
+    height: 16px;
+    background-position: right bottom
+}

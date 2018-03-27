@@ -1,0 +1,154 @@
+body {
+    background: url('../image/songRank/rank_bg.jpg') no-repeat;
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+}
+
+#go_index {
+    position: absolute;
+    left: 0;
+    top: 50px;
+}
+
+.button_left {
+    position: absolute;
+    left: 140px;
+    top: 640px;
+}
+
+.button_right {
+    position: absolute;
+    left: 1110px;
+    top: 640px;
+}
+
+.poster {
+    width: 271px;
+    height: 400px;
+    position: absolute;
+    top: 162px;
+}
+
+.poster_f {
+    width: 271px;
+    height: 622px;
+    position: absolute;
+    top: 28px;
+}
+
+.poster_0 {
+    left: 110px;
+    width: 271px;
+    height: 400px;
+    position: absolute;
+    top: 162px;
+    background: url("../image/songRank/poster_1.png") no-repeat;
+}
+
+.poster_1 {
+    left: 492px;
+    width: 271px;
+    height: 400px;
+    position: absolute;
+    top: 162px;
+    background: url("../image/songRank/poster_2.png") no-repeat;
+
+}
+
+.poster_2 {
+    left: 860px;
+    width: 271px;
+    height: 400px;
+    position: absolute;
+    top: 162px;
+    background: url("../image/songRank/poster_3.png") no-repeat;
+}
+
+.poster_0_f {
+    left: 110px;
+    width: 271px;
+    height: 622px;
+    position: absolute;
+    top: 28px;
+    background: url("../image/songRank/poster_1_f.png") no-repeat;
+
+}
+
+.poster_1_f {
+    left: 492px;
+    width: 271px;
+    height: 622px;
+    position: absolute;
+    top: 28px;
+    background: url("../image/songRank/poster_2_f.png") no-repeat;
+
+}
+
+.poster_2_f {
+    left: 860px;
+    width: 271px;
+    height: 622px;
+    position: absolute;
+    top: 28px;
+    background: url("../image/songRank/poster_3_f.png") no-repeat;
+
+}
+
+.poster_list {
+    position: absolute;
+    height: 370px;
+    top: 230px;
+    display: none;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+.word {
+    color: #FFFFFF;
+    font-size: 30px;
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+}
+.content_song{
+    width:250px;
+    position:absolute;
+    left:15px;
+    overflow: hidden;
+    font-size: 24px;
+    line-height: 34px;
+}
+.middle_content_singer_name {
+    position: absolute;
+    left: 175px;
+    top: 3px;
+    line-height: 30px;
+    width: 150px;
+    font-size: 20px;
+}
+.song_name{
+    position: absolute;
+    left: 30px;
+    top:0;
+    width: 135px;
+    height: 34px;
+    overflow: hidden;
+    line-height: 34px;
+}
+.name_containt {
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}

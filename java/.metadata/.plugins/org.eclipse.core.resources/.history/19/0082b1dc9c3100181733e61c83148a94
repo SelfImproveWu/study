@@ -1,0 +1,132 @@
+/**
+ * 
+ */
+package entity;
+
+/**
+ * @author wuzq
+ * 修理单
+ */
+public class RepairSheetEntity {
+	/**
+	 * 主键ID
+	 */	
+	public int id;
+	/**
+	 * 修理单编号
+	 */
+	public String repairNo;
+	/**
+	 * 日期
+	 */
+	public String repairDate;
+	/**
+	 * 客户编号
+	 */
+	public int user_id;
+	/**
+	 * 车辆编号
+	 */	
+	public int vehicle_id;
+	/**
+	 * 行车里程
+	 */
+	public int drivingDistance;
+	/**
+	 * 油量
+	 */
+	public int tankNum;
+	/**
+	 * 总价
+	 */
+	public float totalPrice;
+	/**
+	 * 项目总数
+	 */
+	public int iteamsNum;
+	/**
+	 * 配件总数
+	 */
+	public int fittingNum;
+	/**
+	 *状态 0 提交未确定认-1不可编辑已锁死 1不可编辑已被确认
+	 */
+	public int status;
+	/**
+	 * 问题描述
+	 */
+	public String description;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getRepairNo() {
+		return repairNo;
+	}
+	public void setRepairNo(String repairNo) {
+		this.repairNo = repairNo;
+	}
+	public String getRepairDate() {
+		return repairDate;
+	}
+	public void setRepairDate(String repairDate) {
+		this.repairDate = repairDate;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	public int getVehicle_id() {
+		return vehicle_id;
+	}
+	public void setVehicle_id(int vehicle_id) {
+		this.vehicle_id = vehicle_id;
+	}
+	public int getDrivingDistance() {
+		return drivingDistance;
+	}
+	public void setDrivingDistance(int drivingDistance) {
+		this.drivingDistance = drivingDistance;
+	}
+	public int getTankNum() {
+		return tankNum;
+	}
+	public void setTankNum(int tankNum) {
+		this.tankNum = tankNum;
+	}
+	public float getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public int getIteamsNum() {
+		return iteamsNum;
+	}
+	public void setIteamsNum(int iteamsNum) {
+		this.iteamsNum = iteamsNum;
+	}
+	public int getFittingNum() {
+		return fittingNum;
+	}
+	public void setFittingNum(int fittingNum) {
+		this.fittingNum = fittingNum;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+}

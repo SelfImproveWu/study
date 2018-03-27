@@ -1,0 +1,108 @@
+body{
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+}
+.order_button{
+    position: absolute;
+}
+.order_cell{
+    position: absolute;
+}
+.focus_on{
+    color: #FDFF00;;
+}
+.focus_off{
+    color: #FFFFFF;
+}
+.back{
+    position: absolute;
+    left: 1209px;
+    top: 19px;
+    width: 42px;
+    height: 42px;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+.order_stay{
+    position: absolute;
+    width: 1280px;
+    height: 720px;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    background: url('../image/orderStay/background_wanliu.png');
+}
+
+.order_continue{
+     width: 220px;
+     height: 102px;
+     position: absolute;
+     top: 350px;
+     left: 420px;
+ }
+.continue_focus_on {
+    background: url('../image/orderStay/juxufufei_f.png');
+}
+.continue_focus_off {
+    background: url('../image/orderStay/juxufufei.png');
+}
+.order_refuse {
+    width: 220px;
+    height: 102px;
+    position: absolute;
+    top: 350px;
+    left: 650px;
+}
+.refuse_focus_on {
+    background: url('../image/orderStay/jianquan_out_f.png');
+}
+.refuse_focus_off {
+    background: url('../image/orderStay/jianquan_out.png');
+}
+.rule_button{
+    position: absolute;
+    left: 1015px;
+    top:570px;
+    width: 163px;
+    height: 54px;
+    border-radius: 30px;
+    background: url("../image/order/rule_button.png") no-repeat;
+}
+.month_num{
+    position: absolute;
+    left: 556px;
+    top: 500px;
+    width: 135px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-weight:bold;
+    color: yellow;
+    font-size: 22px;
+    z-index: 30;
+}
+.year_num{
+    position: absolute;
+    left: 765px;
+    top: 500px;
+    width: 135px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-weight:bold;
+    color: yellow;
+    font-size: 22px;
+    z-index: 30;
+}
+.rule_mask{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 1280px;
+    height: 720px;
+    z-index: 10000;
+    background: url("../image/order/rule_mask.jpg");
+}

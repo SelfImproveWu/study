@@ -1,0 +1,158 @@
+body {
+    position: relative;
+    background: url(../image/subjectList/subject_list_bg.jpg) no-repeat;
+    width: 1280px;
+    height: 720px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.back_to_index {
+    position: absolute;
+    left: 1094px;
+    top: 37px;
+    width: 186px;
+    height: 46px;
+    background: url("../image/subjectList/back_to_index.png") no-repeat;
+}
+
+
+.subject_list_area {
+    position: absolute;
+    left: 42px;
+    top: 100px;
+    width: 1208px;
+    height: 522px;
+}
+
+.subject_box {
+    position: relative;
+    float: left;
+    width: 299px;
+    height: 259px;
+    padding-bottom: 4px;
+    z-index: 18 !important;
+    /*background: url("../image/subjectList/subject_focus.png") no-repeat;*/
+}
+
+.subject_box_img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 299px;
+    height: 259px;
+    z-index: 22;
+    visibility: hidden;
+}
+
+.subject_img {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 280px;
+    height: 185px;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.subject_name {
+    position: absolute;
+    left: 12px;
+    top: 197px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 220px;
+    height: 50px;
+    background-color: #413d69;
+    color: white;
+    font-size: 22px;
+    line-height: 50px;
+    overflow: hidden;
+    font-weight: lighter;
+    z-index: 0;
+    font-family: "Microsoft YaHei" ! important;
+}
+
+.content_focus {
+    background-color: #ed6a00;
+}
+
+.song_name {
+    position: absolute;
+    left: 0;
+    top: 185px;
+    width: 280px;
+    height: 50px;
+    overflow: hidden;
+    color: #ffFFFF;
+    font-size: 21px;
+}
+
+.name_containt {
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}
+
+.page_box {
+    position: absolute;
+    left: 406px;
+    top: 680px;
+    width: 468px;
+    height: 2px;
+    background-color: #c5b4ca;
+}
+.page_tip_bottom{
+    position: absolute;
+    left: 595px;
+    top:624px;
+    opacity: 0.5;
+}
+.current_page_num{
+    position: absolute;
+    left: 654px;
+    top:624px;
+    height: 16px;
+    width: 21px;
+    font-size: 18px;
+    color: #f19149;
+    text-align: center;
+}
+.current_page_bar{
+    position: absolute;
+    left: 446px;
+    width: 100px;
+    top:654px;
+    height: 2px;
+    background: -webkit-linear-gradient(left,#E041B2, rgba(132,0,255,1)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(left,#E041B2, rgba(132,0,255,1)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(left,#E041B2, rgba(132,0,255,1)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(left,#E041B2, rgba(132,0,255,1)); /* 标准的语法 */
+}
+.page_point{
+    position:absolute;
+    left: 1205px;
+    top:651px;
+    width: 16px;
+    height: 8px;
+    background: rgba(237,106,0,1);
+}
+.page_point_f{
+    position: absolute;
+    top:639px;
+    width: 42px;
+    height: 34px;
+    background-image: url(../image/common/page_point_bottom_f.png) ;
+}

@@ -1,0 +1,25 @@
+package service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import entity.RepairSheet;
+
+public class RepairSheetService {
+
+	public ArrayList<RepairSheet> listByUserId(String userId) {
+		ArrayList<RepairSheet> list = new ArrayList<RepairSheet>();
+		try{
+			String sql = "SELECT * FROM repairsheet WHERE user_id = ?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(userId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

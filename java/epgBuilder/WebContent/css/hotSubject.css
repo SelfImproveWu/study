@@ -1,0 +1,135 @@
+body {
+    background: url("../image/images/bg.jpg") no-repeat;
+    height: 720px;
+    width: 1280px;
+    overflow: hidden;
+}
+
+/*滚动图片样式*/
+.tag_img_poster {
+    position: absolute;
+    left: 80px;
+    top: 160px;
+    width: 252px;
+    height: 200px;
+}
+
+.scroll_0_name {
+    position: absolute;
+    left: 80px;
+    top: 180px;
+    width: 250px;
+    height: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    z-index: 2
+}
+
+.scroll_1 {
+    position: absolute;
+    left: 40px;
+    top: 265px;
+    width: 323px;
+    height: 247px;
+    z-index: 1;
+}
+
+.scroll_1_name {
+    position: absolute;
+    left: 40px;
+    top: 472px;
+    width: 323px;
+    height: 42px;
+    color: #ffffff;
+    line-height: 40px;
+    font-size: 20px;
+    text-align: center;
+    z-index: 2;
+    border-radius: 0 0 8px 8px;
+    background: #ed6a00
+}
+
+.scroll_2 {
+    position: absolute;
+    left: 80px;
+    top: 415px;
+    width: 252px;
+    height: 200px;
+}
+
+.scroll_2_name {
+    position: absolute;
+    left: 80px;
+    top: 584px;
+    width: 252px;
+    height: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    z-index: 2
+}
+
+/*标题样式*/
+.tag_title {
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
+.content_list {
+    color: #FFFFFF;
+    font-size: 30px;
+    opacity: 0.7;
+}
+
+.head_title {
+    position: absolute;
+    left: 40px;
+    top: 65px;
+}
+
+/*二级标题样式*/
+.secend_title {
+    position: absolute;
+    left: 200px;
+    top: 65px;
+}
+
+#list_title {
+    position: absolute;
+    left: 500px;
+    top: 80px;
+    opacity: 0.7;
+}
+
+#pageNo {
+    position: absolute;
+    left: 1130px;
+    top: 87px;
+}
+
+#content_list {
+    position: absolute;
+    width: 705px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    top: 130px;
+    left: 490px;
+}
+
+#pageBar {
+    width: 3px;
+    height: 530px;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 1230px;
+    top: 150px;
+}
+
+#pageBarItem {
+    width: 3px;
+    background-color: #4D71D7;
+    position: absolute;
+    left: 1230px;
+    top: 150px;
+    height: 20px;
+}

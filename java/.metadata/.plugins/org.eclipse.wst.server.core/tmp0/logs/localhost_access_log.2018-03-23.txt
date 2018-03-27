@@ -1,0 +1,10 @@
+127.0.0.1 - - [23/Mar/2018:09:55:44 +0800] "GET / HTTP/1.1" 404 988
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:09:57:45 +0800] "GET /repair/index.jsp HTTP/1.1" 200 2805
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:09:57:46 +0800] "GET /favicon.ico HTTP/1.1" 404 1010
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:09:57:48 +0800] "POST /repair/user/login.do HTTP/1.1" 200 3161
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:09:57:49 +0800] "GET /repair/vehicle/vehicle.do?userId=1 HTTP/1.1" 200 13159
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:09:57:50 +0800] "GET /repair/vehicle/listByUserId.do?userId=1 HTTP/1.1" 200 374
+127.0.0.1 - - [23/Mar/2018:09:58:41 +0800] "GET / HTTP/1.1" 404 988
+127.0.0.1 - - [23/Mar/2018:09:58:54 +0800] "GET / HTTP/1.1" 404 988
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:10:10:21 +0800] "POST /repair/vehicle/addVehicle.do HTTP/1.1" 200 7
+0:0:0:0:0:0:0:1 - - [23/Mar/2018:10:10:25 +0800] "GET /repair/vehicle/listByUserId.do?userId=1 HTTP/1.1" 200 496

@@ -1,0 +1,14 @@
+1512986349307	Delete element
+1512986368771	Delete element
+1513058394540	Delete element
+1513058410849	Move 'web.xml' to 'resources'
+1513058432442	Move 'web.xml' to 'WEB-INF'
+1513058531511	Rename package 'epgBuilder.com.control'
+1513058766317	Move 2 resources to 'WEB-INF'
+1513058851835	Rename resource 'sprinContext.xml'
+1513060601876	Rename resource 'application.xml'
+1513064652619	Rename resource 'springMvc-servlet.xml'
+1513064923129	Delete element
+1513065528850	Delete element
+1513065530558	Delete element
+1513065852234	Rename package 'epgBuilder.com.controller'

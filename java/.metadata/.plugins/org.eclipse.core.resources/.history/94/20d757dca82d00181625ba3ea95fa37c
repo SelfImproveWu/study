@@ -1,0 +1,15 @@
+package entity;
+
+public class String {
+
+	/**
+	 * 车型
+	 * 
+	 */
+	protected int vehicleType_id;
+
+	public String() {
+		super();
+	}
+
+}

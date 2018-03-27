@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title>提交修理</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <style>
+        .form_tr {
+            position: relative;
+            left: 10px;
+            width: 300px;
+            height: 50px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: "Microsoft yahei";
+            font-size: 20px;
+            line-height: 50px;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+
+<input type="button" class="add_button" value="添加">
+<div id="add_window" class="easyui-window" title="添加修理单" closed="false" closable="false" collapsible="false"
+     minimizable="false" maximizable="false" style="width: 600px;height: 500px">
+    <form id="add_vehicle" class="add_vehicle"  action="##" method="post">
+        <input type="hidden" name="userId" value="${userId}">
+
+        <div class="form_tr">车辆选择
+            <select id="name" class="easyui-validatebox form_input" name="name" data-options="required:true,validType:'name'" missingMessage="车辆必选不能为空">
+        </div>
+        <div class="form_tr">油量
+            <input id="typeName" class="easyui-validatebox form_input" name="vehicleTyepName">
+        </div>
+        <div class="form_tr">行车里程
+            <input id="mark" class="easyui-validatebox form_input" name="mark">
+        </div>
+        <div class="form_tr">问题描述
+            <input id="chassisNo" class="easyui-validatebox form_input" name="chassis" data-options="required:true,validType:'name'" missingMessage="底盘号不能为空">
+        </div>
+
+        <div class="form_tr">
+            <input id="button_submit" class="button_submit" type="button" onclick="checkAndSubmit()" value="提交">
+            <input id="cancel" class="button_cancel" type="button" onclick="closeWindow()" value="取消">
+        </div>
+    </form>
+</div>
+</body>
+</html>

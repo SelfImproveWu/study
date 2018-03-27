@@ -1,0 +1,218 @@
+body {
+    position: absolute;
+    background: transparent;
+    width: 1280px;
+    height: 720px;
+    overflow: hidden
+}
+
+.promotion_cell {
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3)
+}
+
+.video {
+    position: absolute;
+    width: 558px;
+    height: 314px;
+    top: 108px;
+    left: 358px;
+}
+
+.vip_point {
+    position: absolute;
+    left: 231px;
+    top: 59px;
+    width: 76px;
+    height: 31px;
+    border-radius: 8px;
+    background: url("../image/index/member_points.png") no-repeat;
+    display: none;
+}
+
+.waistcoat_top {
+    position: absolute;
+    overflow: hidden;
+}
+
+.waistcoat_right {
+    position: absolute;
+    overflow: hidden;
+}
+
+.waistcoat_bottom {
+    position: absolute;
+    overflow: hidden;
+}
+
+.waistcoat_left {
+    position: absolute;
+    overflow: hidden;
+}
+
+.order_box {
+    position: absolute;
+    left: 1045px;
+    top: 36px;
+    width: 46px;
+    height: 66px;
+    border-radius: 8px;
+    display: none;
+}
+
+.order_img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.order_name {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    width: 46px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    display: none;
+}
+
+.store_box {
+    position: absolute;
+    left: 1118px;
+    top: 36px;
+    width: 46px;
+    height: 66px;
+    border-radius: 8px;
+}
+
+.store_img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.store_name {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    width: 46px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    display: none;
+}
+
+.collection_box {
+    position: absolute;
+    left: 1190px;
+    top: 36px;
+    width: 46px;
+    height: 66px;
+    border-radius: 8px;
+}
+
+.collection_img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.collection_name {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    width: 46px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    display: none;
+}
+
+.open_chest_mask {
+    position: absolute;
+    left: 247px;
+    top: 60px;
+    width: 966px;
+    height: 601px;
+    background: url("../image/index/activity_tip.png") no-repeat;
+    z-index: 22;
+}
+
+.go_open_chest {
+    position: absolute;
+    left: 340px;
+    top: 506px;
+    width: 132px;
+    height: 61px;
+}
+
+.index_mask {
+    position: absolute;
+    display: none;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    width: 1280px;
+    height: 720px;
+    background-image: url('../image/common/000000_2x2a70.png');
+}
+
+.order_mask {
+    position: absolute;
+    left: 300px;
+    top: 100px;
+    display: none;
+    z-index: 900;
+}
+
+.go_order {
+    position: absolute;
+    left: 242px;
+    top: 310px;
+    width: 194px;
+    height: 97px;
+}
+
+.vip_point_mask {
+    position: absolute;
+    left: 340px;
+    top: 100px;
+    display: none;
+    z-index: 900;
+}
+
+.vip_point_success {
+    position: absolute;
+    width: 173px;
+    height: 65px;
+    left: 215px;
+    top: 282px;
+}
+
+.weekly_update_num {
+    position: absolute;
+    left: 203px;
+    top: 216px;
+    width: 32px;
+    height: 32px;
+    z-index: 30;
+    background-image: url(../image/index/yellow_point.png);
+    font-size: 18px;
+    color: #ffFFFF;
+    text-align: center;
+    line-height: 32px;
+}
+
+.url_bridge {
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}

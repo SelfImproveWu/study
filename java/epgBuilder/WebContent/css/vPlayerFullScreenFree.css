@@ -1,0 +1,391 @@
+body {
+    position: absolute;
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    background: transparent;
+}
+div{
+    position: absolute;
+}
+#newUserTest{
+    width: 1280px;
+    height:720px ;
+    /*background:url(image/help_play_toolbar.png);*/
+    position: absolute;
+    z-index: 666;
+    display: none;
+}
+div#menu {
+    width: 1280px;
+    height: 140px;
+    top: 730px;
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    -webkit-transition: top 0.2s;
+    transition: top 0.2s;
+}
+div#top_video_name {
+    left: 0px;
+    top: -70px;
+    width: 1280px;
+    height: 60px;
+    line-height: 60px;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+    -webkit-transition: top 0.5s ease-in-out;
+    transition: top 0.5s ease-in-out;
+    font-size: 20px;
+}
+div#top_video_name > div {
+    width: 50%;
+    height: 100%;
+}
+div#top_video_name > div > span:first-child {
+    color: #d7780a;
+    font-weight: bold;
+}
+.song_tip {
+    width: 300px;
+    text-align: center;
+    color: #37C9F6;
+    top: 10px;
+    font-size: 24px;
+}
+
+div.time_info {
+    top: 19px;
+    font-size: 30px;
+    color: white;
+    width: 150px;
+    overflow: hidden;
+    text-align: center;
+}
+div#time_info_left {
+    left: 100px;
+    top:48px;
+}
+div#time_info_right {
+    left: 190px;
+    top:48px;
+}
+div#menu_progress_bg {
+    width: 100%;
+    height: 10px;
+    background: #444041;
+}
+div#menu_progress_seek {
+    width: 0px;
+    height: 10px;
+    backgr-ound: #96B4FD;
+    bac-kground: #ff5a00;
+    back-ground: #a3a3a3;
+}
+div#menu_progress {
+    width: 0px;
+    height: 10px;
+    backgr-ound: #f5c244;
+    background: #ff5a00;
+    background: #a3a3a3;
+}
+div#menu_point_div {
+    left: -15px;
+    top: -30px;
+    /*line-height: 50px;*/
+    height: 66px;
+    width: 66px;
+    /*border:1px solid #000;
+    text-align: center;
+    color: #fff;
+    border-radius:50px;
+    font-size: 20px;
+    z-index: 1;*/
+}
+img#menu_point {
+    /*position: absolute;
+    left: 0;
+    top: 0;*/
+    width: 66px;
+    height: 66px;
+    /*border:1px solid #fff;
+    background:#ff5a00;
+    border-radius:48px;
+    z-index: -1;*/
+}
+
+div#menu_seek_time {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    top: -56px;
+    left: 0px;
+    font-size: 30px;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+.menu_seek_direction{
+    position: absolute;
+    top: -16px;
+    left: -22px;
+    width: 110px;
+    height:0;
+    display: none;
+}
+.left_direction,
+.right_direction{
+    position: absolute;
+    width: 110px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color:#fff;
+}
+.left_direction{
+    left: 0;
+    top:-67px;
+    background: url("../image/images/left_direction.png") no-repeat left top;
+}
+.right_direction{
+    left: 0;
+    top: -28px;
+    background: url("../image/images/right_direction.png") no-repeat left top;
+}
+div.menu_btn_div {
+    top: 12px;
+}
+
+div.menu_btn_img_div {
+    top: 5px;
+    width: 144px;
+    height: 74px;
+    background-repeat: no-repeat;
+    background-image: url('../image/images/menu_btn_bg_mg.png');
+}
+
+div.menu_btn_0_div {
+    left: 20px;
+}
+
+div.menu_btn_1_div {
+    left: 650px;
+}
+
+div.menu_btn_2_div {
+    left: 800px;
+}
+
+div.menu_btn_3_div {
+    left: 954px;
+}
+
+div.menu_btn_4_div {
+    left: 1109px;
+}
+
+div.menu_btn_5_div {
+    left: 811px;
+}
+
+div.menu_btn_6_div {
+    left: 925px;
+}
+
+div#pause_mask {
+    left: 0;
+    top:0;
+    width: 1280px;
+    height: 720px;
+    background: rgba(0, 0, 0, 0.7);
+    visibility: hidden;
+}
+
+div#sidebar {
+    z-index: 666;
+    width: 250px;
+    height: 720px;
+    background: rgba(0, 0, 0, 0.8);
+    left: 0px;
+    visibility: hidden;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+div.sidebar_line_div {
+    left: 10px;
+    width: 230px;
+    height: 1px;
+    background: #585858;
+}
+
+img.sidebar_btn {
+    width: 160px;
+    height: 59px;
+}
+
+div#sidebar_line_0_div {
+    top: 177px;
+}
+
+div#sidebar_line_1_div {
+    top: 267px;
+}
+
+div#sidebar_line_2_div {
+    top: 357px;
+}
+
+div#sidebar_line_3_div {
+    top: 447px;
+}
+
+div#sidebar_line_4_div {
+    top: 537px;
+}
+
+div.sidebar_btn_div {
+    left: 50px;
+}
+
+div.sidebar_btn_0_div {
+    top: 200px;
+}
+
+div.sidebar_btn_1_div {
+    top: 290px;
+}
+
+div.sidebar_btn_2_div {
+    top: 380px;
+}
+
+div.sidebar_btn_3_div {
+    top: 470px;
+}
+
+#choose_list{width:400px;height:720px;position:absolute;top:0;left:880px;background-color: rgba(0,0,0,0.5);display: none;}
+#yiDian,#yiDian_f{position:absolute;top:10px;left:60px;}
+#yiChang,#yiChang_f{position:absolute;top:10px;left:220px;}
+#pageNo{position:absolute;left:180px;top:660px;}
+
+#right_menu{position:absolute;top:0;left:200px;display: none;}
+#choose{position:absolute;left:1150px;top:300px;}
+#choose_f{position:absolute;left:1137px;top:286px;}
+#choosed{position:absolute;left:1150px;top:400px;}
+#choosed_f{position:absolute;left:1137px;top:386px;}
+.word_white_30{color:#FFFFFF;font-size: 20px;}
+
+#pageBar{width:5px;height:530px;background-color: darkgray;position:absolute;left:395px;top:100px;}
+#pageBarItem{width:5px;background-color: #4D71D7;position:absolute;left:395px;top:100px;height:20px;}
+.media_list_name_container{
+    position: relative;
+    display: inline-block;
+    width: 140px;
+    height: 40px;
+    overflow: hidden;
+    vertical-align: middle;
+    /*border: solid 0px red;*/
+    float: left;
+
+}
+.media_list_name_container_ut{
+    display: block;
+    width: 140px;
+    height: 40px;
+    overflow: hidden;
+    vertical-align: middle;
+    /*border: solid 0px red;*/
+    float: left;
+
+}
+.content_song_number{
+    position: relative;
+    float: left;
+    line-height: 40px;
+    height: 40px;
+}
+.go_top{
+    position: absolute;
+    width: 47px;
+    height: 36px;
+    background: url(../image/kalaok/to_top.png);
+}
+
+.add_song {
+    position: absolute;
+    width: 47px;
+    height: 36px;
+}
+
+.delete_song {
+    position: absolute;
+    width: 47px;
+    height: 36px;
+    background-image: url("../image/kalaok/delete.png");
+}
+
+.content_song {
+    position: absolute;
+    padding-left: 20px;
+    width: 220px;
+    font-size: 20px;
+    overflow: hidden;
+    height: 55px;
+    line-height: 60px;
+    left: 0px;
+}
+.song_name{
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    left: 50px;
+    width: 170px;
+    height: 46px;
+}
+.name_containt {
+    position: relative;
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}
+.be_ordered{
+    position: absolute;
+    left: 34px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 6px 0 0 6px;
+    background: rgba(141,73,52,1);
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.be_singed{
+    position: absolute;
+    left: 190px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 0 6px 6px 0 ;
+    background: rgba(0,0,0,0.2);
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}

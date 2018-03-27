@@ -1,0 +1,504 @@
+
+body {
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    background: url("../image/kalaok/diangetai_bg.png") no-repeat;
+    background-color: transparent;
+
+}
+div{
+    position: absolute;
+}
+#newUserTest {
+    width: 1280px;
+    height: 720px;
+    /*background:url(image/help_play_toolbar.png);*/
+    position: absolute;
+    z-index: 666;
+    display: none;
+}
+
+div#menu {
+    width: 829px;
+    height: 85px;
+    left: 51px;
+    top: 565px;
+    display: block;
+    background: rgb(0, 0, 0);
+    -webkit-transition: top 0.2s;
+    transition: top 0.2s;
+}
+
+div#top_video_name {
+    left: 0;
+    top: -70px;
+    width: 1280px;
+    height: 60px;
+    line-height: 60px;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+    -webkit-transition: top 0.5s ease-in-out;
+    transition: top 0.5s ease-in-out;
+    font-size: 20px;
+}
+
+div#top_video_name > div {
+    width: 50%;
+    height: 100%;
+}
+
+div#top_video_name > div > span:first-child {
+    color: #d7780a;
+    font-weight: bold;
+}
+
+.song_tip {
+    width: 300px;
+    text-align: center;
+    color: #37C9F6;
+    top: 10px;
+    font-size: 24px;
+}
+
+
+
+div.time_info {
+    top: 5px;
+    font-size: 25px;
+    color: white;
+    width: 150px;
+    overflow: hidden;
+    text-align: center;
+}
+
+div#time_info_left {
+    left: 50px;
+    top: 36px;
+}
+
+div#time_info_right {
+    left: 130px;
+    top: 36px;
+}
+
+div#menu_progress_bg {
+    width: 100%;
+    height: 10px;
+    background: #444041;
+}
+
+div#menu_progress_seek {
+    width: 0px;
+    height: 10px;
+    background: #96B4FD;
+}
+
+div#menu_progress {
+    width: 0px;
+    height: 10px;
+    background: #f5c244;
+}
+
+div#menu_point_div {
+    left: -28px;
+    top: -24px;
+}
+
+img#menu_point {
+    width: 58px;
+    height: 59px;
+}
+
+div#menu_seek_time {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    top: -56px;
+    left: 0px;
+    font-size: 30px;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+div.menu_btn_div {
+    top: 12px;
+}
+
+div.menu_btn_img_div {
+    top: 5px;
+    width: 100px;
+    height: 50px;
+    background: url('../image/images/menu_btn_bg.png') no-repeat;
+}
+
+div.menu_btn_0_div {
+    left: 20px;
+}
+
+div.menu_btn_1_div {
+    left: 409px;
+}
+
+div.menu_btn_2_div {
+    left: 509px;
+}
+
+div.menu_btn_3_div {
+    left: 609px;
+}
+
+div.menu_btn_4_div {
+    left: 709px;
+}
+
+div.menu_btn_5_div {
+    left: 811px;
+}
+
+div.menu_btn_6_div {
+    left: 925px;
+}
+
+div#pause_mask {
+    width: 1280px;
+    height: 720px;
+    background: rgba(0, 0, 0, 0.7);
+    visibility: hidden;
+}
+
+div#sidebar {
+    z-index: 666;
+    width: 250px;
+    height: 720px;
+    background: rgba(0, 0, 0, 0.8);
+    left: 0px;
+    visibility: hidden;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+div.sidebar_line_div {
+    left: 10px;
+    width: 230px;
+    height: 1px;
+    background: #585858;
+}
+
+img.sidebar_btn {
+    width: 160px;
+    height: 59px;
+}
+
+div#sidebar_line_0_div {
+    top: 177px;
+}
+
+div#sidebar_line_1_div {
+    top: 267px;
+}
+
+div#sidebar_line_2_div {
+    top: 357px;
+}
+
+div#sidebar_line_3_div {
+    top: 447px;
+}
+
+div#sidebar_line_4_div {
+    top: 537px;
+}
+
+div.sidebar_btn_div {
+    left: 50px;
+}
+
+div.sidebar_btn_0_div {
+    top: 200px;
+}
+
+div.sidebar_btn_1_div {
+    top: 290px;
+}
+
+div.sidebar_btn_2_div {
+    top: 380px;
+}
+
+div.sidebar_btn_3_div {
+    top: 470px;
+}
+
+#choose_list {
+    width: 360px;
+    height: 550px;
+    position: absolute;
+    top: 100px;
+    left: 880px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+#pageNo {
+    position: absolute;
+    left: 160px;
+    top: 520px;
+}
+
+#right_menu {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    display: none;
+}
+
+#choose {
+    position: absolute;
+    left: 1150px;
+    top: 300px;
+}
+
+#choose_f {
+    position: absolute;
+    left: 1137px;
+    top: 286px;
+}
+
+#choosed {
+    position: absolute;
+    left: 1150px;
+    top: 400px;
+}
+
+#choosed_f {
+    position: absolute;
+    left: 1137px;
+    top: 386px;
+}
+
+.word_white_30 {
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+#pageBar {
+    width: 2px;
+    height: 440px;
+    background-color: rgba(149, 136, 170, 0.6);
+    position: absolute;
+    left: 350px;
+    top: 70px;
+}
+
+
+.add_song{
+    position: absolute;
+    width: 69px;
+    height: 58px;
+    background: url(../image/kalaok/add.png) no-repeat;
+    background-position: 11px 11px;
+}
+.add_song_f{
+    position: absolute;
+    width: 69px;
+    height: 58px;
+    background: url(../image/kalaok/add_f.png) no-repeat;
+}
+.go_top{
+    position: absolute;
+    width: 69px;
+    height: 58px;
+    background: url(../image/kalaok/to_top.png) no-repeat;
+    background-position: 11px 11px;
+}
+.go_top_f{
+    position: absolute;
+    width: 69px;
+    height: 58px;
+    background: url(../image/kalaok/to_top_f.png) no-repeat;
+}
+
+.delete_song {
+    position: absolute;
+    width: 69px;
+    height: 58px;
+    background: url(../image/kalaok/delete.png) no-repeat;
+    background-position: 11px 11px;
+}
+.delete_song_f {
+    position: absolute;
+    width: 69px;
+    height: 58px;
+    background: url(../image/kalaok/delete_f.png) no-repeat;
+}
+.content_song {
+    padding-left: 20px;
+    width: 220px;
+    font-size: 20px;
+    overflow: hidden;
+    height: 55px;
+    line-height: 60px;
+    position: absolute;
+    left: 0px;
+}
+.content_song_default{
+    background: transparent;
+}
+.content_song_f{
+    background: url(../image/kalaok/song_name_f.png) no-repeat;
+}
+.song_name{
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    left: 50px;
+    text-align: center;
+    width: 170px;
+    height: 40px;
+}
+.name_containt {
+    position: relative;
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}
+.choose_d{/*默认状态*/
+    position: absolute;
+    left: 34px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 6px 0 0 6px;
+    background: rgba(0,0,0,0.2);
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.choose_current{ /*当前列表已点，但是焦点不在已点上面*/
+    position: absolute;
+    left: 34px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 6px 0 0 6px;
+    background: rgba(141,73,52,1);;
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.choose_f{
+    position: absolute;
+    left: 34px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 6px 0 0 6px;
+    background: rgba(236,107,0,1);
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.choosed_d{
+    position: absolute;
+    left: 190px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 0 6px 6px 0 ;
+    background: rgba(0,0,0,0.2);
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.choosed_f{
+    position: absolute;
+    left: 190px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 0 6px 6px 0 ;
+    background: rgba(236,107,0,1);
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.choosed_current{
+    position: absolute;
+    left: 190px;
+    top:20px;
+    width: 156px;
+    height: 36px;
+    border-radius: 0 6px 6px 0 ;
+    background: rgba(141,73,52,1);;
+    text-align: center;
+    line-height: 36px;
+    color: #ffFFFF;
+    font-size: 22px;
+}
+.current_page_bar{
+    position: absolute;
+    left: 0px;
+    top:0px;
+    width: 2px;
+    background: -webkit-linear-gradient(#E041B2, rgba(132,0,255,1)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#E041B2, rgba(132,0,255,1)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#E041B2, rgba(132,0,255,1)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#E041B2, rgba(132,0,255,1)); /* 标准的语法 */
+}
+.page_point{
+    position: absolute;
+    left: -3px;
+    width: 8px;
+    height: 16px;
+    background: rgba(237,106,0,1);
+}
+.page_point_f{
+    position: absolute;
+    left: -15px;
+    width: 34px;
+    height: 42px;
+    background: url(../image/tagSong/page_point_f.png) no-repeat;
+}
+.page_tip{
+    position: absolute;
+    left:1245px;
+    top:342px;
+    width: 17px;
+    height: 98px;
+    background: url("../image/tagSong/page_tip.png") no-repeat;
+    opacity: 0.5;
+}
+.page_num{
+    position: absolute;
+    left: -3px;
+    top:65px;
+    height: 18px;
+    width: 24px;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: #f19149;
+}
+

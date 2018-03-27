@@ -1,0 +1,187 @@
+body {
+    left: 0;
+    top: 0;
+    background: url('../image/songRank/rank_bg.jpg') no-repeat;
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+}
+
+.list_hidden_0 {
+    position: absolute;
+    left: 162px;
+    top: 175px;
+    width: 270px;
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list_0_show {
+    position: absolute;
+    left: 162px;
+    top: 63px;
+    width: 270px;
+    height: 622px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list_hidden_1 {
+    position: absolute;
+    left: 505px;
+    top: 175px;
+    width: 270px;
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list_1_show {
+    position: absolute;
+    left: 505px;
+    top: 63px;
+    width: 270px;
+    height: 622px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list_hidden_2 {
+    position: absolute;
+    left: 848px;
+    top: 175px;
+    width: 270px;
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list_2_show {
+    position: absolute;
+    left: 848px;
+    top: 63px;
+    width: 270px;
+    height: 622px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list_hidden_3 {
+    position: absolute;
+    left: 1185px;
+    top: 175px;
+    width: 95px;
+    height: 400px;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+}
+.list_hidden_before{
+    position: absolute;
+    left: 0;
+    top: 175px;
+    width: 95px;
+    height: 400px;
+    border-radius: 0 10px 10px 0;
+    overflow: hidden;
+    background-position: -180px 0;
+}
+.list_3_mask {
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    width: 100px;
+    height: 400px;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+    background: url("../image/hotList/hide_mask.png") no-repeat;
+}
+
+.content_0 {
+    position: absolute;
+    left: 177px;
+    top: 270px;
+    width: 240px;
+    height: 400px;
+}
+
+.content_1 {
+    position: absolute;
+    left: 520px;
+    top: 270px;
+    width: 240px;
+    height: 400px;
+}
+
+.content_2 {
+    position: absolute;
+    left: 863px;
+    top: 270px;
+    width: 240px;
+    height: 400px;
+}
+
+.content_song {
+    width: 240px;
+    position: absolute;
+    left: 0px;
+    overflow: hidden;
+    font-size: 22px;
+    line-height: 34px;
+    border-radius: 8px;
+    color: #ffFFFF;
+}
+
+.song_name {
+    position: absolute;
+    left: 28px;
+    top: 0;
+    width: 115px;
+    height: 34px;
+    overflow: hidden;
+    line-height: 34px;
+}
+
+.singer_name {
+    position: absolute;
+    left: 160px;
+    font-size: 18px;
+    color: rgba(255, 236, 230, 1);
+    top: 0px;
+    width: 80px;
+    height: 34px;
+    overflow: hidden;
+    line-height: 34px;
+}
+
+.content_other {
+    width: 220px;
+    position: absolute;
+    left: 15px;
+    height: 33px;
+    font-size: 22px;
+    line-height: 34px;
+    border-radius: 8px;
+    color: #ffFFFF;
+    overflow: hidden;
+}
+
+.name_containt {
+    position: relative;
+    width: 2000px;
+    float: left;
+    overflow: hidden;
+}
+
+.name_first {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+}
+
+.name_second {
+    position: relative;
+    float: left;
+    padding: 0px 30px 0px 0px;
+    visibility: hidden;
+}

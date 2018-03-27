@@ -1,0 +1,51 @@
+package controller;
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import entity.RepairSheet;
+import entity.User;
+import service.RepairSheetService;
+import service.UserService;
+import util.StringUtil;
+@Controller 
+@RequestMapping("/repair")
+public class RepairSheetController {
+	@RequestMapping("/listByUserId")
+	public String listByUserId(HttpServletRequest request){
+		String result= "";
+		try{
+			String userId = StringUtil.getString(request.getParameter("userId"));
+			ArrayList<RepairSheet> list = new ArrayList<RepairSheet>();
+			RepairSheetService rs = new RepairSheetService();
+			list = rs.listByUserId(userId);//查看所有订单
+			}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	/**
+	 * 前台加载首页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/index")
+	public ModelAndView index(HttpServletRequest request){
+		ModelAndView mdv = new ModelAndView();
+		try{
+			String userId = StringUtil.getString(request.getParameter("userId"));
+			mdv.setViewName("repairSheet");
+			mdv.addObject("userId", userId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+		return mdv;
+	}
+}

@@ -1,0 +1,14 @@
+package service;
+
+import java.util.ArrayList;
+
+import entity.RepairSheet;
+
+public class RepairSheetService {
+
+	public ArrayList<RepairSheet> listByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

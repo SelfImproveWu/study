@@ -1,0 +1,124 @@
+package controller;
+
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import entity.User;
+import service.UserService;
+import util.StringUtil;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+//	public UserController(){
+//		System.out.println("1111111111111");
+//	}
+	
+	@RequestMapping("/getUser")
+	public User getUser(String strId) {
+		User user = new User();
+		return user;
+	}
+	/**
+	 * login.do
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/login",method = RequestMethod.POST)
+	public ModelAndView  login(HttpServletRequest request, HttpServletResponse response) {
+		
+		User user = new User();
+		ModelAndView mdv = new ModelAndView();
+		try {
+			String loginName = StringUtil.getString(request.getParameter("loginName"));
+			String password = StringUtil.getString(request.getParameter("password"));
+			System.out.println("loginName----" + loginName);
+			System.out.println("password----" + password);
+			UserService us = new UserService();
+			user = us.doLogin(loginName,password);
+			if(null == user){
+				mdv.setViewName("../../index");
+				mdv.addObject("result", "账号或者密码错误！");
+				System.out.println("出错了");
+				
+			}else{
+				mdv.setViewName("main");
+				//HashMap<String,Object> map = new HashMap<String, Object>();
+				user.setPassword(null);//密码清空，防止页面中被别人拿去了密码
+				//map.put("user", user);
+				mdv.addObject("result", "success");
+				mdv.addObject("user", user);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mdv;
+	}
+	/**
+	 * register
+	 * @param request
+	 * @param response
+	 * @return 
+	 */
+	@RequestMapping("/register")
+	public ModelAndView register(HttpServletRequest request, HttpServletResponse response) {
+		User user = new User();
+		ModelAndView mdv = new ModelAndView();
+		boolean bl= false;
+		try {
+			String loginName = StringUtil.getString(request.getParameter("loginName"));
+			String password = StringUtil.getString(request.getParameter("password"));
+			String sex = StringUtil.getString(request.getParameter("sex"));
+			String identityID = StringUtil.getString(request.getParameter("identityID"));
+			String name = StringUtil.getString(request.getParameter("name"));
+			String address = StringUtil.getString(request.getParameter("address"));
+			String tel = StringUtil.getString(request.getParameter("tel"));
+
+			user.setLoginName(loginName);
+			user.setPassword(password);
+			user.setIdentityID(identityID);
+			user.setName(name);
+			user.setAdress(address);
+			user.setSex(Integer.parseInt(sex));
+			user.setTel(tel);
+//			System.out.println("loginName----" + loginName);
+//			System.out.println("password----" + password);
+			UserService us = new UserService();
+			bl = us.add(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mdv.addObject("result", bl);
+		mdv.setViewName("main");
+		return mdv;
+	}
+	/**
+	 * check is having this login name 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/isRepeat")
+	@ResponseBody
+	public String isRepeat(HttpServletRequest request){
+		boolean bl = false;
+		try{
+			String loginName = StringUtil.getString(request.getParameter("loginName"));
+			UserService us = new UserService();
+			bl = us.isRepeatUser(loginName);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return bl?"true":"false";
+	}
+
+}
